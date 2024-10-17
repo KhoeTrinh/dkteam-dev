@@ -1,0 +1,19 @@
+<div
+  class="w-full h-20 flex justify-between bg-gradient-to-tr from-stone-200 via-stone-600 to-gray-400"
+>
+  <div class="w-1/5 max-w-40 h-5/6 relative my-auto">
+    <img [ngSrc]="imgSrc" alt="?" fill priority />
+  </div>
+  <div class="w-3/5 max-w-xl h-full flex justify-between items-center mr-3">
+    @if(innerWidth > 700) {
+      <a routerLink="" class=" {{ aClass }} ">Home</a>
+      <a routerLink="products" class=" {{ aClass }} ">Products</a>
+      <a routerLink="aboutme" class=" {{ aClass }} ">Aboutme</a>
+      <a routerLink="contactus" class=" {{ aClass }} ">Contactus</a>
+    }
+    @else {
+      <img [ngSrc]="imgSrc2" alt="123" width="30" height="30">
+    }
+  </div>
+</div>
+<router-outlet />
