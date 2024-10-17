@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div class="space-y-5 w-full h-[18rem] pt-32 pl-20 {{ tClass }}">
+  <p class="text-5xl font-bold">Welcome to DKTeam</p>
+  <p class="pl-5">We are here for your convenience</p>
+</div>
+<div class="{{ cClass }} {{ tClass }}">
+  <p class="text-xl font-semibold flex items-center">
+    Check out our products
+    <a routerLink="products" class="text-2xl mx-2">now!</a>
+    <img
+      [ngSrc]="imgSrc"
+      alt="123"
+      width="30"
+      height="30"
+      class="text-white fill-white"
+    />
+  </p>
+</div>
+<div class="{{ cClass }} {{ tClass }} my-6 font-semibold">Or</div>
+<div class="{{ cClass }} {{ tClass }} text-xl font-semibold">Join us now</div>
+<div class="{{ cClass }} max-w-xl mx-auto">
+  <a
+    href="https://www.facebook.com/Khoevippro/"
+    class="h-10 w-10 rounded-full mt-6"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img [ngSrc]="imgSrc2" alt="facebook" height="100" width="100" />
+  </a>
+</div>
