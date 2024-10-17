@@ -1,18 +1,40 @@
-<div
-  class="w-full h-20 flex justify-between bg-gradient-to-tr from-stone-200 via-stone-600 to-gray-400"
->
+<div class="w-full h-20 flex justify-between {{ bgClass }}">
   <div class="w-1/5 max-w-40 h-5/6 relative my-auto">
     <img [ngSrc]="imgSrc" alt="?" fill priority />
   </div>
   <div class="w-3/5 max-w-xl h-full flex justify-between items-center mr-3">
     @if(innerWidth > 700) {
-      <a routerLink="" class=" {{ aClass }} ">Home</a>
-      <a routerLink="products" class=" {{ aClass }} ">Products</a>
-      <a routerLink="aboutme" class=" {{ aClass }} ">Aboutme</a>
-      <a routerLink="contactus" class=" {{ aClass }} ">Contactus</a>
-    }
-    @else {
-      <img [ngSrc]="imgSrc2" alt="123" width="30" height="30">
+    <a routerLink="" class=" {{ aClass }} ">Home</a>
+    <a routerLink="products" class=" {{ aClass }} ">Products</a>
+    <a routerLink="aboutme" class=" {{ aClass }} ">Aboutme</a>
+    <a routerLink="contactus" class=" {{ aClass }} ">Contactus</a>
+    } @else {
+    <div></div>
+    <div class="mr-3 relative">
+      <img
+        [ngSrc]="imgSrc2"
+        alt=""
+        width="30"
+        height="30"
+        (click)="toggleMenu()"
+      />
+      @if(isMenuOpen) {
+      <div
+        class="absolute top-8 rounded-md right-0 w-40 h-64 {{
+          bgClass
+        }} shadow-lg shadow-slate-900 flex flex-wrap"
+      >
+        <a routerLink="" class="{{ aClass2 }} border-b border-gray-500">Home</a>
+        <a routerLink="products" class="{{ aClass2 }} border-b border-gray-500"
+          >Products</a
+        >
+        <a routerLink="aboutme" class="{{ aClass2 }} border-b border-gray-500"
+          >Aboutme</a
+        >
+        <a routerLink="contactus" class="{{ aClass2 }}">Contactus</a>
+      </div>
+      }
+    </div>
     }
   </div>
 </div>
