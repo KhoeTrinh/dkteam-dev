@@ -1,0 +1,7 @@
+.app-bg {
+  background-image: url('../../../assets/png/pexels-anubhaw-anand-2027697.jpg');
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

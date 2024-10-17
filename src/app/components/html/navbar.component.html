@@ -1,13 +1,21 @@
-<div class="w-full h-20 flex justify-between {{ bgClass }}">
+<div class="w-full h-20 flex justify-between {{ bgClass }} relative">
   <div class="w-1/5 max-w-40 h-5/6 relative my-auto">
     <img [ngSrc]="imgSrc" alt="?" fill priority />
   </div>
-  <div class="w-3/5 max-w-xl h-full flex justify-between items-center mr-3">
+  <div class="w-2/3 max-w-xl h-full flex justify-between items-center mr-3">
     @if(innerWidth > 700) {
+    <div class="flex items-center text-center">
+      <a
+        routerLink="signin"
+        class="bg-white text-black w-[5.5rem] font-bold px-4 py-2 rounded-lg mx-auto"
+        >Sign In</a
+      >
+    </div>
     <a routerLink="" class=" {{ aClass }} ">Home</a>
     <a routerLink="products" class=" {{ aClass }} ">Products</a>
-    <a routerLink="aboutme" class=" {{ aClass }} ">Aboutme</a>
-    <a routerLink="contactus" class=" {{ aClass }} ">Contactus</a>
+    <a routerLink="aboutme" class=" {{ aClass }} ">About Us</a>
+    <a routerLink="contactus" class=" {{ aClass }} ">Contact</a>
+
     } @else {
     <div></div>
     <div class="mr-3 relative">
@@ -20,7 +28,7 @@
       />
       @if(isMenuOpen) {
       <div
-        class="absolute top-8 rounded-md right-0 w-40 h-64 {{
+        class="absolute top-8 rounded-md right-0 w-40 h-64 z-10 overflow-hidden {{
           bgClass
         }} shadow-lg shadow-slate-900 flex flex-wrap"
       >
@@ -31,11 +39,21 @@
         <a routerLink="aboutme" class="{{ aClass2 }} border-b border-gray-500"
           >Aboutme</a
         >
-        <a routerLink="contactus" class="{{ aClass2 }}">Contactus</a>
+        <a routerLink="contactus" class="{{ aClass2 }} border-b border-gray-500"
+          >Contactus</a
+        >
+        <a routerLink="signin" class="{{ aClass2 }} bg-gray-300 text-black"
+          >Sign In</a
+        >
       </div>
       }
     </div>
     }
   </div>
 </div>
-<router-outlet />
+<div
+  class="w-full h-4 absolute -mt-1 top-20 left-0 bg-gradient-to-b from-slate-900 to-black shadow-lg shadow-black"
+></div>
+<div class="app-bg">
+  <router-outlet />
+</div>
