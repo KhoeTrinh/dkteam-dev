@@ -1,5 +1,5 @@
 <app-navbar />
-<div class="app-bg">
+<div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal' ">
   <router-outlet />
 </div>
 <app-footer />

@@ -1,0 +1,16 @@
+.product-bg {
+  background-image: url('../../../assets/png/OIP (1).jpg');
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.scrollbar {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+}
