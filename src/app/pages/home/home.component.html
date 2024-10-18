@@ -1,11 +1,28 @@
-<div class="space-y-5 w-full h-[18rem] pt-32 pl-20 {{ tClass }}">
-  <p class="text-5xl font-bold">Welcome to DKTeam</p>
-  <p class="pl-5">We are here for your convenience</p>
+<div
+  class="space-y-5 w-full {{ tClass }} {{
+    innerWidth > 1000 ? 'h-[18rem] pl-60 pt-32' :
+    innerWidth > 720 ? 'h-[18rem] pt-32 pl-20' : 'text-center pt-20 pb-10'
+  }}"
+>
+  <p class="font-bold {{ innerWidth > 600 ? 'text-5xl' : 'text-4xl' }}">
+    Welcome to DKTeam
+  </p>
+  <p class="{{ innerWidth > 600 ? 'pl-5' : 'p-0' }}">
+    We are here for your convenience
+  </p>
 </div>
 <div class="{{ cClass }} {{ tClass }}">
-  <p class="text-xl font-semibold flex items-center">
+  <p
+    class="font-semibold flex items-center {{
+      innerWidth > 600 ? 'text-xl' : innerWidth > 266 ? 'text-sm' : 'hidden'
+    }}"
+  >
     Check out our products
-    <a routerLink="products" class="text-2xl mx-2">now!</a>
+    <a
+      routerLink="products"
+      class="{{ innerWidth > 600 ? 'text-2xl' : 'text-md' }} mx-2"
+      >now!</a
+    >
     <img
       [ngSrc]="imgSrc"
       alt="123"
@@ -15,8 +32,20 @@
     />
   </p>
 </div>
-<div class="{{ cClass }} {{ tClass }} my-6 font-semibold">Or</div>
-<div class="{{ cClass }} {{ tClass }} text-xl font-semibold">Join us now</div>
+<div
+  class="{{ cClass }} {{ tClass }} my-6 font-semibold {{
+    innerWidth > 266 ? '' : 'hidden'
+  }}"
+>
+  Or
+</div>
+<div
+  class="{{ cClass }} {{ tClass }} {{
+    innerWidth > 600 ? 'text-xl' : 'text-md'
+  }} font-semibold"
+>
+  Join us now
+</div>
 <div class="{{ cClass }} max-w-xl mx-auto">
   <a
     href="https://www.facebook.com/Khoevippro/"

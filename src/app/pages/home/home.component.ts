@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { WidthCheckService } from '../../services/width-check.service';
 
 @Component({
   selector: 'app-home',
@@ -16,4 +17,12 @@ export class HomeComponent {
   imgSrc: string = 'assets/svg/arrow-narrow-right-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/facebook-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/zalo-svgrepo-com.svg';
+
+  innerWidth: number = 0;
+  constructor(private widthCheck: WidthCheckService) {
+    this.innerWidth = this.widthCheck.innerWidth;
+    window.addEventListener('resize', () => {
+      this.innerWidth = this.widthCheck.innerWidth;
+    });
+  }
 }
