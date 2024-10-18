@@ -1,8 +1,0 @@
-.app-bg {
-  background-image: url('../../../assets/png/OIP.jpg');
-  width: 100%;
-  height: calc(100vh - 5rem - 4rem);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}

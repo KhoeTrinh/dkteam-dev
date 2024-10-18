@@ -14,7 +14,7 @@ export class HomeComponent {
   tClass: string =
     'bg-gradient-to-t from-sky-300 via-fuchsia-50 to-emerald-50 bg-clip-text text-transparent';
   cClass: string = 'flex justify-center';
-  imgSrc: string = 'assets/svg/arrow-narrow-right-svgrepo-com.svg';
+  imgSrc: string = 'assets/svg/arrow-narrow-right-svgrepo-com-white.svg';
   imgSrc2: string = 'assets/svg/facebook-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/zalo-svgrepo-com.svg';
 

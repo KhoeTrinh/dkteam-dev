@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { WidthCheckService } from '../../services/width-check.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgOptimizedImage],
+  imports: [RouterLink, NgOptimizedImage],
   templateUrl: '../html/navbar.component.html',
   styleUrl: '../css/navbar.component.css'
 })
