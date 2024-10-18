@@ -16,7 +16,7 @@ export class NavbarComponent {
 
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700'
   aClass: string = 'text-white text-sm px-4 py-2 h-full w-full flex justify-center items-center font-bold';
-  aClass2: string = 'w-full flex justify-center items-center text-white'
+  aClass2: string = 'w-full flex justify-center items-center text-white border-b border-gray-500'
 
   innerWidth: number = 0;
   isMenuOpen: boolean = false

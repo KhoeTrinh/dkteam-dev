@@ -1,7 +1,10 @@
 <div
   class="space-y-5 w-full {{ tClass }} {{
-    innerWidth > 1000 ? 'h-[18rem] pl-60 pt-32' :
-    innerWidth > 720 ? 'h-[18rem] pt-32 pl-20' : 'text-center pt-20 pb-10'
+    innerWidth > 1000
+      ? 'h-[18rem] pl-60 pt-32'
+      : innerWidth > 720
+      ? 'h-[18rem] pt-32 pl-20'
+      : 'text-center pt-20 pb-10'
   }}"
 >
   <p class="font-bold {{ innerWidth > 600 ? 'text-5xl' : 'text-4xl' }}">
@@ -14,7 +17,7 @@
 <div class="{{ cClass }} {{ tClass }}">
   <p
     class="font-semibold flex items-center {{
-      innerWidth > 600 ? 'text-xl' : innerWidth > 266 ? 'text-sm' : 'hidden'
+      innerWidth > 600 ? 'text-xl' : 'text-sm'
     }}"
   >
     Check out our products
@@ -32,13 +35,7 @@
     />
   </p>
 </div>
-<div
-  class="{{ cClass }} {{ tClass }} my-6 font-semibold {{
-    innerWidth > 266 ? '' : 'hidden'
-  }}"
->
-  Or
-</div>
+<div class="{{ cClass }} {{ tClass }} my-6 font-semibold">Or</div>
 <div
   class="{{ cClass }} {{ tClass }} {{
     innerWidth > 600 ? 'text-xl' : 'text-md'
