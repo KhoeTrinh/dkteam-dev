@@ -26,7 +26,6 @@ export class ProductElementComponent implements OnInit {
   ngOnInit() {
     this.authors = this.productData.author
     this.comments = this.productData.comment
-    console.log(this.comments);
   }
   commentClick(e: Event) {
     e.preventDefault();

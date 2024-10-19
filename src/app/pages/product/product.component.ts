@@ -19,7 +19,14 @@ export class ProductComponent {
   imgSrc3: string = 'assets/svg/gear-10-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc5: string = 'assets/svg/user-svgrepo-com.svg';
+  imgSrc6: string = 'assets/svg/search-svgrepo-com.svg'
   innerWidth: number = 0;
+
+  isExpanded: boolean = false;
+
+  toggleInputWidth() {
+    this.isExpanded = !this.isExpanded;
+  }
 
   productArray: Array<any> = [
     {

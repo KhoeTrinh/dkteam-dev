@@ -12,7 +12,23 @@
     <div class="flex justify-start text-2xl mt-10 ml-3">
       <div>Checkout our products!!😊</div>
     </div>
-    <app-product-element />
+    <div class="relative">
+      <img
+        [ngSrc]="imgSrc6"
+        alt=""
+        width="38"
+        height="38"
+        class="{{ bgClass }} absolute rounded-md p-1"
+        (click)="toggleInputWidth()"
+      />
+      <input
+        type="text"
+        placeholder="Enter product id or name"
+        class="border rounded-md p-1.5 transition-all duration-300 ease-in-out {{
+          isExpanded ? 'w-auto' : 'w-[38px]'
+        }}"
+      />
+    </div>
     @for(product of productArray; track product.id) {
     <app-product-element [productData]="product" />
     }
