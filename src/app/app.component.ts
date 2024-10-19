@@ -22,7 +22,7 @@ export class AppComponent {
         )
       )
       .subscribe((event: NavigationEnd) => {
-        const specialRoutes = ['/', '/signin', '/signup'];
+        const specialRoutes = ['/', '/signin', '/signup', '/aboutus', '/contactus'];
         this.isSpecialRoute = specialRoutes.includes(event.urlAfterRedirects);
       });
   }

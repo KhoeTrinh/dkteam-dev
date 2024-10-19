@@ -30,6 +30,5 @@ export class NavbarComponent {
 
   toggleMenu() {
     this.isMenuOpen =!this.isMenuOpen;
-    console.log(this.isMenuOpen);
   }
 }
