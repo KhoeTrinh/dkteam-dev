@@ -1,1 +1,53 @@
-<p>contactus works!</p>
+<div class="max-w-5xl w-full h-full mx-auto pt-5 pb-7">
+  <div class="w-auto h-full bg-white mx-20 mt-6 p-3 rounded-xl">
+    <div class="flex justify-center text-3xl mt-10 pb-5 mx-3 text-center">
+      <div>Wanna some more information about our team?</div>
+    </div>
+    <div class="flex justify-center p-3 mt-5 relative">
+      <img [ngSrc]="imgSrc" alt="" width="100" height="100" class="ml-7" />
+      <img [ngSrc]="imgSrc2" alt="" width="30" height="30" />
+      <img [ngSrc]="imgSrc3" alt="" width="50" height="50" class="mx-6" />
+      <img
+        [ngSrc]="imgSrc4"
+        alt=""
+        width="50"
+        height="50"
+        class="mx-6 absolute left-1/2 -translate-x-[34px] -top-3"
+      />
+    </div>
+    <div class="flex items-center max-w-xl mx-auto">
+      <div class="text-lg mr-4">Join our facebook community</div>
+      <img [ngSrc]="imgSrc2" alt="" width="30" height="30" />
+      <a
+        href="https://www.facebook.com/Khoevippro/"
+        class="h-10 w-10 rounded-full ml-4"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img [ngSrc]="imgSrc5" alt="facebook" height="100" width="100" />
+      </a>
+    </div>
+    <div class="flex justify-center my-4 font-semibold">Or</div>
+    <div class="flex items-center max-w-xl mx-auto">
+      <div class="text-lg mr-4">View our code on Github</div>
+      <img [ngSrc]="imgSrc2" alt="" width="30" height="30" />
+      <a
+        href="https://github.com/KhoeTrinh"
+        class="h-10 w-10 rounded-full ml-4"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img [ngSrc]="imgSrc6" alt="facebook" height="100" width="100" />
+      </a>
+    </div>
+    <div class="flex justify-center my-4 font-semibold">Or</div>
+    <div class="flex items-center max-w-xl mx-auto">
+      <div class="text-lg mr-4">Email us</div>
+      <img [ngSrc]="imgSrc2" alt="" width="30" height="30" />
+      <div class="h-10 w-10 rounded-full ml-4 flex items-center">
+        <img [ngSrc]="imgSrc3" alt="facebook" height="100" width="100" />
+        <div class="font-medium ml-2">kelvintrinh09&#64;gmail.com</div>
+      </div>
+    </div>
+  </div>
+</div>
