@@ -13,5 +13,8 @@
       <div>Checkout our products!!😊</div>
     </div>
     <app-product-element />
+    @for(product of productArray; track product.id) {
+    <app-product-element [productData]="product" />
+    }
   </div>
 </div>
