@@ -3,7 +3,7 @@
     <img [ngSrc]="imgSrc" alt="?" fill priority />
   </div>
   <div class="w-2/3 max-w-xl h-full flex justify-between items-center mr-3">
-    @if(innerWidth > 733) {
+    @if(innerWidth > 733) { @if(!user) {
     <div class="flex items-center text-center">
       <a
         routerLink="signin"
@@ -11,13 +11,22 @@
         >Sign In</a
       >
     </div>
+    } @else {
+    <div class="bg-white rounded-md"></div>
+    <img
+      [ngSrc]="userData.userImage"
+      alt=""
+      width="32"
+      height="32"
+      class="bg-white rounded-full box-content p-1"
+    />
+    }
     <a routerLink="" class=" {{ aClass }} ">Home</a>
     <a routerLink="products" class=" {{ aClass }} ">Products</a>
     <a routerLink="aboutus" class=" {{ aClass }} ">About Us</a>
     <a routerLink="contactus" class=" {{ aClass }} ">Contact</a>
 
     } @else {
-    <div></div>
     <div class="mr-3 relative">
       <img
         [ngSrc]="imgSrc2"
@@ -32,12 +41,19 @@
           bgClass
         }} shadow-lg shadow-slate-900 flex flex-wrap"
       >
-        <a routerLink="" class="{{ aClass2 }}">Home</a>
-        <a routerLink="products" class="{{ aClass2 }}">Products</a>
-        <a routerLink="aboutus" class="{{ aClass2 }}">Aboutus</a>
-        <a routerLink="contactus" class="{{ aClass2 }}">Contact Us</a>
+        <a routerLink="" class="{{ aClass2 }}" (click)="closeMenu()">Home</a>
+        <a routerLink="products" class="{{ aClass2 }}" (click)="closeMenu()"
+          >Products</a
+        >
+        <a routerLink="aboutus" class="{{ aClass2 }}" (click)="closeMenu()"
+          >Aboutus</a
+        >
+        <a routerLink="contactus" class="{{ aClass2 }}" (click)="closeMenu()"
+          >Contact Us</a
+        >
         <a
           routerLink="signin"
+          (click)="closeMenu()"
           class="text-black w-full flex justify-center items-center bg-gray-300"
           >Sign In</a
         >

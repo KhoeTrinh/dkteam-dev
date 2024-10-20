@@ -13,6 +13,11 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
   isSpecialRoute: boolean = false;
+  isUser: boolean = true;
+  userData: any = {
+    username: "khoa",
+    userImage: "assets/svg/user-svgrepo-com.svg"
+  }
 
   constructor(private router: Router) {
     this.router.events

@@ -1,4 +1,4 @@
-<app-navbar />
+<app-navbar [user]="isUser" [userData]="userData" />
 <div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal' ">
   <router-outlet />
 </div>
