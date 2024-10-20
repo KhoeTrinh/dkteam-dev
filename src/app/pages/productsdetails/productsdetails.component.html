@@ -1,0 +1,63 @@
+<div class="max-w-3xl w-full mx-auto pt-5">
+  <div class="w-auto h-full bg-white mx-20 mt-6 p-3 rounded-xl">
+    <div class="flex justify-center">
+      <div
+        class="relative w-[4.5rem] h-[4.5rem] m-3 rounded-full bg-black shadow-lg"
+      >
+        <div
+          class="w-16 h-16 rounded-full bg-white flex justify-center items-center absolute top-1 left-1 z-50"
+        >
+          <img [ngSrc]="imgSrc" alt="" width="40" height="40" />
+        </div>
+      </div>
+    </div>
+    <div
+      class="{{
+        tClass
+      }} text-3xl font-medium flex flex-col items-center pb-3 space-y-2"
+    >
+      <div>File Sharing</div>
+      <div class="text-sm">#id: 123567899</div>
+    </div>
+    <div id="dynamic-content"></div>
+    <div class="">
+      <div class="font-semibold mb-5">
+        Describe: A product created primarily for file sharing
+      </div>
+      <div class="flex justify-between mx-5">
+        <div class="flex flex-col justify-center mb-5">
+          <div class="flex items-center mb-5">
+            <img [ngSrc]="imgSrc2" alt="" width="20" height="20" />
+            <div class="ml-2">Status: Active</div>
+          </div>
+          <div class="flex items-center">
+            <img [ngSrc]="imgSrc3" alt="" width="20" height="20" />
+            <div class="ml-2">Created: 2021-12-31</div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center mb-5">
+          <div class="font-bold mb-4">Our wonderful Author</div>
+          <div class="flex -space-x-4">
+            @for(dev of devArray; track dev.id) {
+              <div
+                class="flex justify-center items-center w-9 h-9 bg-white shadow-md rounded-full"
+              >
+                <div class="w-[1.75rem] h-[1.75rem] rounded-full bg-white">
+                  <img
+                    ngSrc="{{dev.imgSrc}} "
+                    alt=""
+                    className="inline-block object-cover h-10 w-10 rounded-full ring-2 ring-slate-100"
+                    width="30"
+                    height="30"
+                    key="{index}"
+                  />
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between items-center mt-5"></div>
+    </div>
+  </div>
+</div>

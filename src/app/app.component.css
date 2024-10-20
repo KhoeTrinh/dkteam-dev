@@ -1,4 +1,4 @@
-.app-bg-special {
+.app-bg-normal {
   background-image: url('../assets/png/OIP.jpg');
   width: 100%;
   height: calc(100vh - 5rem - 4rem);
@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
 }
 
-.app-bg-normal {
+.app-bg-special {
   background-image: url('../assets/png/OIP.jpg');
   width: 100%;
   height: auto;
