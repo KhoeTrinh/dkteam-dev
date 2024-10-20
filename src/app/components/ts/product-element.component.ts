@@ -17,6 +17,7 @@ export class ProductElementComponent implements OnInit {
   imgSrc3: string = 'assets/svg/gear-10-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc5: string = 'assets/svg/user-svgrepo-com.svg';
+  imgSrc6: string = 'assets/svg/info-circle-svgrepo-com.svg'
   commentOpen: boolean = false;
   authors: any = ''
   comments: any = ''

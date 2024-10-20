@@ -11,6 +11,7 @@ import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 export class ProductsdetailsComponent implements AfterViewInit {
   tClass: string = `bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))]
   from-zinc-800 via-indigo-900 to-gray-300 bg-clip-text text-transparent`;
+  bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/status-up-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/date-range-svgrepo-com.svg'
