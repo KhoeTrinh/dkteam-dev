@@ -15,6 +15,7 @@ export class AppComponent {
   isSpecialRoute: boolean = false;
   isUser: boolean = true;
   userData: any = {
+    id: 1,
     username: "khoa",
     userImage: "assets/svg/user-svgrepo-com.svg"
   }

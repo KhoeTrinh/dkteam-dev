@@ -2,7 +2,7 @@
   <div class="w-1/5 max-w-40 h-5/6 relative my-auto ml-2">
     <img [ngSrc]="imgSrc" alt="?" fill priority />
   </div>
-  <div class="w-2/3 max-w-xl h-full flex justify-between items-center mr-3">
+  <div id="menu" class="{{isMenuOpen2 ? 'w-auto' : 'w-2/3'}} max-w-xl h-full flex justify-between items-center mr-3">
     @if(innerWidth > 733) { @if(!user) {
     <div class="flex items-center text-center">
       <a
@@ -12,55 +12,110 @@
       >
     </div>
     } @else {
-    <div class="bg-white rounded-md"></div>
     <img
       [ngSrc]="userData.userImage"
       alt=""
       width="32"
       height="32"
       class="bg-white rounded-full box-content p-1"
+      (click)="toggleOpenMenu2()"
     />
-    }
+    } @if(!isMenuOpen2) {
     <a routerLink="" class=" {{ aClass }} ">Home</a>
     <a routerLink="products" class=" {{ aClass }} ">Products</a>
     <a routerLink="aboutus" class=" {{ aClass }} ">About Us</a>
     <a routerLink="contactus" class=" {{ aClass }} ">Contact</a>
-
     } @else {
-    <div class="mr-3 relative">
+    <div class="flex items-center ml-2 text-white space-x-2 mr-4">
+      <div>Username: {{ userData.username }}</div>
+      <div>|</div>
+      <div class="m-0">#id: {{ userData.id }}</div>
+    </div>
+    <div class="flex-grow"></div>
+    <button
+      type="button"
+      class="px-4 py-2 bg-white rounded-md text-black !text-sm"
+    >
+      Edit profile
+    </button>
+    } } @else { @if(isMenuOpen) {
+    <div
+      class="absolute bg-black w-screen h-screen z-50 top-0 right-0 bg-opacity-50"
+    >
+      <div class="flex justify-end items-center h-20 mx-7">
+        <img
+          [ngSrc]="imgSrc4"
+          alt=""
+          width="20"
+          height="20"
+          (click)="closeMenu()"
+        />
+      </div>
+      <div
+        class="w-auto mx-5 h-[calc(100%-4.8rem-4rem)] mt-[calc(4.8rem-5rem)] mb-16 rounded-md bg-black bg-opacity-30"
+      >
+        <div class="flex flex-col overflow-hidden p-5 space-y-1">
+          @if(user) {
+          <div class="flex items-center px-4 py-2 text-white text-xs">
+            <div class="bg-white rounded-full p-1">
+              <img [ngSrc]="userData.userImage" alt="" width="35" height="35" />
+            </div>
+            <div class="flex flex-col ml-2 space-y-1">
+              <div>Username: {{ userData.username }}</div>
+              <div class="">#id: {{ userData.id }}</div>
+            </div>
+            <div class="flex-grow"></div>
+            <button
+              type="button"
+              class="px-4 py-2 bg-white rounded-md text-black !text-sm"
+            >
+              Edit profile
+            </button>
+          </div>
+          }
+          <a routerLink="" class="{{ aClass2 }}" (click)="closeMenu()">
+            Home
+          </a>
+          <a routerLink="products" class="{{ aClass2 }}" (click)="closeMenu()">
+            Products
+          </a>
+          <a routerLink="aboutus" class="{{ aClass2 }}" (click)="closeMenu()">
+            About Us
+          </a>
+          <a routerLink="contactus" class="{{ aClass2 }}" (click)="closeMenu()">
+            Contact
+          </a>
+          @if(!user) {
+          <a
+            routerLink="signin"
+            class="{{ aClass2 }} text-cyan-200"
+            (click)="closeMenu()"
+          >
+            Sign In
+          </a>
+          } @else {
+          <a
+            routerLink=""
+            class="{{ aClass2 }} text-cyan-200"
+            (click)="closeMenu()"
+          >
+            Log Out
+          </a>
+          }
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="mr-3 relative w-full flex justify-end">
       <img
         [ngSrc]="imgSrc2"
         alt=""
         width="30"
         height="30"
-        (click)="toggleMenu()"
+        (click)="openMenu()"
       />
-      @if(isMenuOpen) {
-      <div
-        class="absolute top-8 rounded-md right-0 w-40 h-64 z-10 overflow-hidden {{
-          bgClass
-        }} shadow-lg shadow-slate-900 flex flex-wrap"
-      >
-        <a routerLink="" class="{{ aClass2 }}" (click)="closeMenu()">Home</a>
-        <a routerLink="products" class="{{ aClass2 }}" (click)="closeMenu()"
-          >Products</a
-        >
-        <a routerLink="aboutus" class="{{ aClass2 }}" (click)="closeMenu()"
-          >Aboutus</a
-        >
-        <a routerLink="contactus" class="{{ aClass2 }}" (click)="closeMenu()"
-          >Contact Us</a
-        >
-        <a
-          routerLink="signin"
-          (click)="closeMenu()"
-          class="text-black w-full flex justify-center items-center bg-gray-300"
-          >Sign In</a
-        >
-      </div>
-      }
     </div>
-    }
+    } }
   </div>
 </div>
 <div
