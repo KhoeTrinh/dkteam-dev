@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { WidthCheckService } from '../../services/width-check.service';
@@ -24,19 +24,20 @@ export class NavbarComponent {
 
   innerWidth: number = 0;
   isMenuOpen: boolean = false;
-  isMenuOpen2: boolean = false
+  isMenuOpen2: boolean = false;
 
   @Input() user: boolean = false;
+  @Input() admin: boolean = false;
   @Input() userData: any = '';
 
-  constructor(private widthCheck: WidthCheckService) {
+  constructor(private widthCheck: WidthCheckService, private eRef: ElementRef) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
       this.innerWidth = this.widthCheck.innerWidth;
       if (this.innerWidth > 733) {
         this.isMenuOpen = false;
       } else {
-        this.isMenuOpen2 = false
+        this.isMenuOpen2 = false;
       }
     });
   }
@@ -45,11 +46,23 @@ export class NavbarComponent {
     this.isMenuOpen = true;
   }
 
-  closeMenu(){
+  closeMenu() {
     this.isMenuOpen = false;
   }
 
   toggleOpenMenu2() {
-    this.isMenuOpen2 =!this.isMenuOpen2;
+    this.isMenuOpen2 = !this.isMenuOpen2;
+  }
+
+  closeMenu2() {
+    this.isMenuOpen2 = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(e: Event): void {
+    const clickInside = this.eRef.nativeElement.contains(e.target);
+    if (!clickInside && this.isMenuOpen2) {
+      this.isMenuOpen2 = false;
+    }
   }
 }

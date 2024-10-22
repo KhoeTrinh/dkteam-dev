@@ -14,6 +14,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   isSpecialRoute: boolean = false;
   isUser: boolean = true;
+  isAdmin: boolean = true;
   userData: any = {
     id: 1,
     username: "khoa",

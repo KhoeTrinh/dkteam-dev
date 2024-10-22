@@ -2,7 +2,10 @@
   <div class="w-1/5 max-w-40 h-5/6 relative my-auto ml-2">
     <img [ngSrc]="imgSrc" alt="?" fill priority />
   </div>
-  <div id="menu" class="{{isMenuOpen2 ? 'w-auto' : 'w-2/3'}} max-w-xl h-full flex justify-between items-center mr-3">
+  <div
+    id="menu"
+    class="w-2/3 max-w-xl h-full flex justify-between items-center mr-3"
+  >
     @if(innerWidth > 733) { @if(!user) {
     <div class="flex items-center text-center">
       <a
@@ -20,24 +23,58 @@
       class="bg-white rounded-full box-content p-1"
       (click)="toggleOpenMenu2()"
     />
-    } @if(!isMenuOpen2) {
-    <a routerLink="" class=" {{ aClass }} ">Home</a>
-    <a routerLink="products" class=" {{ aClass }} ">Products</a>
-    <a routerLink="aboutus" class=" {{ aClass }} ">About Us</a>
-    <a routerLink="contactus" class=" {{ aClass }} ">Contact</a>
-    } @else {
-    <div class="flex items-center ml-2 text-white space-x-2 mr-4">
-      <div>Username: {{ userData.username }}</div>
-      <div>|</div>
-      <div class="m-0">#id: {{ userData.id }}</div>
-    </div>
-    <div class="flex-grow"></div>
-    <button
-      type="button"
-      class="px-4 py-2 bg-white rounded-md text-black !text-sm"
+    }
+    <a routerLink="" class=" {{ aClass }} " (click)="closeMenu2()">Home</a>
+    <a routerLink="products" class=" {{ aClass }} " (click)="closeMenu2()"
+      >Products</a
     >
-      Edit profile
-    </button>
+    <a routerLink="aboutus" class=" {{ aClass }} " (click)="closeMenu2()"
+      >About Us</a
+    >
+    <a routerLink="contactus" class=" {{ aClass }} " (click)="closeMenu2()"
+      >Contact</a
+    >
+    @if(isMenuOpen2) {
+    <div
+      class="flex items-center absolute w-2/3 h-20 left-1/2 -translate-x-1/3 rounded-md shadow-lg z-50 bg-black bg-opacity-30 top-3/4 mt-6"
+    >
+      <img
+        [ngSrc]="userData.userImage"
+        alt=""
+        width="32"
+        height="32"
+        class="bg-white rounded-full box-content p-1 -mt-6 ml-2"
+        (click)="toggleOpenMenu2()"
+      />
+      <div class="flex flex-col ml-2 space-y-1 text-white">
+        <div>Username: {{ userData.username }}</div>
+        <div class="">#id: {{ userData.id }}</div>
+      </div>
+      <div class="flex-grow"></div>
+      @if(admin) {
+        <a
+          class="px-4 py-2 bg-white rounded-md text-black !text-sm mr-2"
+          routerLink="dashboard"
+          (click)="closeMenu2()"
+        >
+          Admin Dash
+        </a>
+      }
+      <a
+        class="px-4 py-2 bg-white rounded-md text-black !text-sm mr-2"
+        routerLink="edit"
+        (click)="closeMenu2()"
+      >
+        Edit profile
+      </a>
+      <a
+        class="px-2 py-2 bg-white rounded-md text-black mr-2"
+        routerLink=""
+        (click)="closeMenu2()"
+      >
+        <img [ngSrc]="imgSrc3" alt="" width="20" height="20" />
+      </a>
+    </div>
     } } @else { @if(isMenuOpen) {
     <div
       class="absolute bg-black w-screen h-screen z-50 top-0 right-0 bg-opacity-50"
@@ -65,12 +102,22 @@
               <div class="">#id: {{ userData.id }}</div>
             </div>
             <div class="flex-grow"></div>
-            <button
-              type="button"
+            @if(admin) {
+              <a
+                class="px-4 py-2 bg-white rounded-md text-black !text-sm mr-2"
+                routerLink="dashboard"
+                (click)="closeMenu()"
+              >
+                Admin Dash
+              </a>
+            }
+            <a
               class="px-4 py-2 bg-white rounded-md text-black !text-sm"
+              routerLink="edit"
+              (click)="closeMenu()"
             >
               Edit profile
-            </button>
+            </a>
           </div>
           }
           <a routerLink="" class="{{ aClass2 }}" (click)="closeMenu()">

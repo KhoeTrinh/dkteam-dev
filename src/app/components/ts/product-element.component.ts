@@ -1,10 +1,11 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product-element',
   standalone: true,
-  imports: [NgOptimizedImage, DatePipe],
+  imports: [NgOptimizedImage, DatePipe, RouterLink],
   templateUrl: '../html/product-element.component.html',
   styleUrl: '../css/product-element.component.css',
 })
