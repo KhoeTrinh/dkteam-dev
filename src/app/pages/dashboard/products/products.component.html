@@ -1,1 +1,26 @@
-<p>products works!</p>
+<div class="max-w-5xl w-full h-full mx-auto pt-5 pb-7">
+  <div class="w-auto h-full bg-white mx-20 mt-6 p-3 rounded-xl">
+    <div class="flex justify-center text-3xl mt-10 pb-5 mx-3 text-center">
+      <div>Products</div>
+    </div>
+    <div
+      class="flex items-center {{
+        bgClass
+      }} -mb-3 rounded-md text-white px-2 py-1.5 space-x-1 w-[9.2rem] mx-10"
+    >
+      <div class="text-lg font-semibold">Create new</div>
+      <img [ngSrc]="imgSrc4" alt="" width="26" height="26" />
+    </div>
+    @for(product of productArray; track product.id) {
+    <app-product-element [productData]="product" class="relative" />
+    <a
+      routerLink="/dashboard/products/{{ product.id }}"
+      class="absolute {{
+        bgClass
+      }} w-10 h-10 rounded-md -mt-[9.6%] ml-[10%] flex justify-center items-center"
+    >
+      <img [ngSrc]="imgSrc3" alt="" width="30" height="30" />
+    </a>
+    }
+  </div>
+</div>

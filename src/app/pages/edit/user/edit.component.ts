@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { CapitailizeFirst } from '../../utils/pipes/CapitalFirst.pipe';
+import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 
 @Component({
   selector: 'app-edit',

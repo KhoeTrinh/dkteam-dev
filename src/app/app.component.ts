@@ -29,7 +29,7 @@ export class AppComponent {
         )
       )
       .subscribe((event: NavigationEnd) => {
-        const specialRoutes = ['/products'];
+        const specialRoutes = ['/products', '/dashboard/products'];
         this.isSpecialRoute = specialRoutes.includes(event.urlAfterRedirects);
       });
   }

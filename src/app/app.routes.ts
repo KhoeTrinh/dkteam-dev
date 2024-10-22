@@ -6,7 +6,8 @@ import { ContactusComponent } from './pages/contactus/contactus.component';
 import { SigninComponent } from './pages/auth/signin/signin.component';
 import { SignupComponent } from './pages/auth/signup/signup.component';
 import { ProductsdetailsComponent } from './pages/productsdetails/productsdetails.component';
-import { EditComponent } from './pages/edit/edit.component';
+import { EditComponent } from './pages/edit/user/edit.component';
+import { ProductEditComponent } from './pages/edit/product/product.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AdminComponent } from './pages/dashboard/admin/admin.component';
 import { UsersComponent } from './pages/dashboard/users/users.component';
@@ -51,14 +52,18 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard/admin',
-    component: AdminComponent
+    component: AdminComponent,
   },
   {
     path: 'dashboard/users',
-    component: UsersComponent
+    component: UsersComponent,
   },
   {
     path: 'dashboard/products',
-    component: ProductsComponent
+    component: ProductsComponent,
+  },
+  {
+    path: 'dashboard/products/:id',
+    component: ProductEditComponent,
   },
 ];
