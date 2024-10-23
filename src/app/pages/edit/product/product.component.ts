@@ -12,6 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductEditComponent implements OnInit {
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/user-svgrepo-com.svg';
+  imgSrc3: string = 'assets/svg/plus-svgrepo-com.svg';
+  bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
+  authorArray: Array<string> = [];
   fileName: string = '';
   productId: string = '';
 
@@ -26,6 +29,14 @@ export class ProductEditComponent implements OnInit {
     const file: File = event.target.files[0];
     if (file) {
       this.fileName = file.name;
+    }
+  }
+
+  addAuthor(a: HTMLInputElement) {
+    const author = a.value.trim()
+    if(author) {
+      this.authorArray.push(author);
+      a.value = '';
     }
   }
 
