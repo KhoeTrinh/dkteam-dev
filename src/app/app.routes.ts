@@ -5,7 +5,7 @@ import { AboutusComponent } from './pages/aboutus/aboutus.component';
 import { ContactusComponent } from './pages/contactus/contactus.component';
 import { SigninComponent } from './pages/auth/signin/signin.component';
 import { SignupComponent } from './pages/auth/signup/signup.component';
-import { ProductsdetailsComponent } from './pages/productsdetails/productsdetails.component';
+import { ProductsdetailsComponent } from './pages/product/productsdetails/productsdetails.component';
 import { EditComponent } from './pages/edit/user/edit.component';
 import { ProductEditComponent } from './pages/edit/product/product.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';

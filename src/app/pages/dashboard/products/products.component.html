@@ -3,13 +3,32 @@
     <div class="flex justify-center text-3xl mt-10 pb-5 mx-3 text-center">
       <div>Products</div>
     </div>
-    <div
-      class="flex items-center {{
-        bgClass
-      }} -mb-3 rounded-md text-white px-2 py-1.5 space-x-1 w-[9.2rem] mx-10"
-    >
-      <div class="text-lg font-semibold">Create new</div>
-      <img [ngSrc]="imgSrc4" alt="" width="26" height="26" />
+    <div class="flex items-center -mb-3 space-x-3">
+      <div
+        class="flex items-center {{
+          bgClass
+        }} rounded-md text-white px-2 py-1.5 space-x-1 w-[9.2rem] ml-10"
+      >
+        <div class="text-lg font-semibold">Create new</div>
+        <img [ngSrc]="imgSrc4" alt="" width="26" height="26" />
+      </div>
+      <div class="relative">
+        <img
+          [ngSrc]="imgSrc5"
+          alt=""
+          width="40"
+          height="40"
+          class="{{ bgClass }} absolute rounded-md p-1"
+          (click)="toggleInputWidth()"
+        />
+        <input
+          type="text"
+          placeholder="Enter product id or name"
+          class="border rounded-md p-1.5 transition-all duration-300 ease-in-out h-[40px] {{
+            isExpanded ? 'w-auto ml-[42px]' : 'w-[40px]'
+          }}"
+        />
+      </div>
     </div>
     @for(product of productArray; track product.id) {
     <app-product-element [productData]="product" class="relative" />

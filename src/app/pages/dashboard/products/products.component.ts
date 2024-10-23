@@ -8,15 +8,19 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [NgOptimizedImage, ProductElementComponent, RouterLink],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrl: './products.component.css',
 })
 export class ProductsComponent {
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/user-svgrepo-com.svg';
-  imgSrc3: string = 'assets/svg/pen-square-svgrepo-com-white.svg'
-  imgSrc4: string = 'assets/svg/plus-svgrepo-com.svg'
+  imgSrc3: string = 'assets/svg/pen-square-svgrepo-com-white.svg';
+  imgSrc4: string = 'assets/svg/plus-svgrepo-com.svg';
+  imgSrc5: string = 'assets/svg/search-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
-
+  isExpanded: boolean = false;
+  toggleInputWidth() {
+    this.isExpanded = !this.isExpanded;
+  }
   productArray: Array<any> = [
     {
       id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',
@@ -30,28 +34,28 @@ export class ProductsComponent {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '1'
+            id: '1',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '2'
+            id: '2',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '3'
+            id: '3',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '4'
+            id: '4',
           },
         },
       ],
@@ -86,28 +90,28 @@ export class ProductsComponent {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '1'
+            id: '1',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '2'
+            id: '2',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '3'
+            id: '3',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '4'
+            id: '4',
           },
         },
       ],
@@ -142,28 +146,28 @@ export class ProductsComponent {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '1'
+            id: '1',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '2'
+            id: '2',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '3'
+            id: '3',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '4'
+            id: '4',
           },
         },
       ],
@@ -198,28 +202,28 @@ export class ProductsComponent {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '1'
+            id: '1',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '2'
+            id: '2',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '3'
+            id: '3',
           },
         },
         {
           authorProd: {
             userImage: this.imgSrc2,
             username: 'Khoa',
-            id: '4'
+            id: '4',
           },
         },
       ],
