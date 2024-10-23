@@ -88,11 +88,12 @@
         </div>
       </div>
       <button
-        type="submit"
-        class="w-full rounded-md text-white {{ bgClass }} h-10"
-      >
-        Submit
-      </button>
+      type="button"
+      (click)="onSubmit()"
+      class="w-full rounded-md text-white {{ bgClass }} h-10"
+    >
+      Submit
+    </button>
     </form>
   </div>
 </div>

@@ -1,7 +1,7 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgOptimizedImage } from '@angular/common';
 
 interface ProductForm {
   link: FormControl<string | null>;
@@ -44,8 +44,6 @@ export class ProductEditComponent implements OnInit {
       image: new FormControl<string | null>(this.fileName),
       author: new FormControl<string[] | null>(this.authorArray),
     });
-
-    console.log(this.productForm);
   }
 
   ngOnInit() {
@@ -58,7 +56,6 @@ export class ProductEditComponent implements OnInit {
       this.fileName = file.name;
       this.productForm.get('image')?.setValue(file.name);
     }
-    console.log(file);
   }
 
   addAuthor(a: HTMLInputElement) {
@@ -69,7 +66,25 @@ export class ProductEditComponent implements OnInit {
       a.value = '';
       this.authorInput.nativeElement.focus();
     }
-    console.log(this.productForm);
+  }
+
+  onSubmit() {
+    const formValue = this.productForm.value;
+    let submitData
+    if(formValue.image === this.productsDataById.image) {
+      submitData = {
+        link: formValue.link,
+        title: formValue.title,
+        description: formValue.description,
+        author: formValue.author?.map((id: string) => ({ id })),
+      };
+    } else {
+      submitData = {
+        image: formValue.image,
+      };
+    }
+
+    console.log('Form Submitted:', submitData);
   }
 
   productsDataById = {
