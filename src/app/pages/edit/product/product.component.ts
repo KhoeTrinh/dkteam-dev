@@ -1,13 +1,22 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
+interface ProductForm {
+  link: FormControl<string | null>;
+  title: FormControl<string | null>;
+  description: FormControl<string | null>;
+  image: FormControl<string | null>;
+  author: FormControl<string[] | null>;
+}
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, ReactiveFormsModule],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.css',
+  styleUrls: ['./product.component.css'],
 })
 export class ProductEditComponent implements OnInit {
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
@@ -15,13 +24,31 @@ export class ProductEditComponent implements OnInit {
   imgSrc3: string = 'assets/svg/plus-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   authorArray: Array<string> = [];
-  fileName: string = '';
+  fileName: string | null = 'No file chosen';
   productId: string = '';
+  productForm: FormGroup<ProductForm>;
 
-  constructor(private route: ActivatedRoute) {}
+  @ViewChild('a') authorInput!: ElementRef;
+
+  constructor(private route: ActivatedRoute) {
+    this.authorArray = this.productsDataById.author.map(
+      (au) => au.authorProd.id
+    );
+    this.fileName = this.productsDataById.image;
+    this.productForm = new FormGroup<ProductForm>({
+      link: new FormControl<string | null>(this.productsDataById.link),
+      title: new FormControl<string | null>(this.productsDataById.title),
+      description: new FormControl<string | null>(
+        this.productsDataById.description
+      ),
+      image: new FormControl<string | null>(this.fileName),
+      author: new FormControl<string[] | null>(this.authorArray),
+    });
+
+    console.log(this.productForm);
+  }
 
   ngOnInit() {
-    this.fileName = this.productsDataById.image || 'No file chosen';
     this.productId = this.route.snapshot.paramMap.get('id')!;
   }
 
@@ -29,15 +56,20 @@ export class ProductEditComponent implements OnInit {
     const file: File = event.target.files[0];
     if (file) {
       this.fileName = file.name;
+      this.productForm.get('image')?.setValue(file.name);
     }
+    console.log(file);
   }
 
   addAuthor(a: HTMLInputElement) {
-    const author = a.value.trim()
-    if(author) {
+    const author = a.value.trim();
+    if (author) {
       this.authorArray.push(author);
+      this.productForm.get('author')?.setValue(this.authorArray);
       a.value = '';
+      this.authorInput.nativeElement.focus();
     }
+    console.log(this.productForm);
   }
 
   productsDataById = {
