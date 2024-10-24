@@ -18,7 +18,7 @@
             bgClass
           }} text-white font-bold px-4 py-2 rounded-md hover:bg-blue-600"
         >
-          {{fileName || 'Choose a file'}}
+          {{ fileName || "Choose a file" }}
         </label>
         <input
           id="file-upload"
@@ -45,7 +45,7 @@
           />
         </div>
       </div>
-      <div class="w-full flex justify-between">
+      <div class="w-full flex justify-between min-h-[12.5rem]">
         <div class="w-[45%]">
           <label class="text-lg font-medium">Product Description:</label>
           <textarea
@@ -75,25 +75,34 @@
           <div
             class="mt-2 ml-2 space-y-1 max-h-[114.4px] overflow-y-scroll rounded-md"
           >
-            @for(author of authorArray; track author) {
+            @for(author of authorArray; track author; let i = $index) {
             <div
               class="inline-block text-xs mr-1 px-2 py-1.5 rounded-md {{
                 bgClass
-              }} text-white overflow-hidden whitespace-nowrap overflow-ellipsis max-w-[90%]"
+              }} text-white text-center overflow-hidden whitespace-nowrap overflow-ellipsis min-w-[90%] max-w-[90%]"
+              (click)="DeleteAuthor(i)"
+              (mouseenter)="OnHover(i)"
+              (mouseleave)="OnHover(null)"
             >
+              @if(hoveredIndex === i) {
+              <div class="flex justify-center">
+                <img [ngSrc]="imgSrc4" alt="" width="16" height="16" />
+              </div>
+              } @else {
               {{ author }}
+              }
             </div>
             }
           </div>
         </div>
       </div>
       <button
-      type="button"
-      (click)="onSubmit()"
-      class="w-full rounded-md text-white {{ bgClass }} h-10"
-    >
-      Submit
-    </button>
+        type="button"
+        (click)="onSubmit()"
+        class="w-full rounded-md text-white {{ bgClass }} h-10"
+      >
+        Submit
+      </button>
     </form>
   </div>
 </div>

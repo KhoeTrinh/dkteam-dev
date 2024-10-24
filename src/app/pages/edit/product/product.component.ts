@@ -22,11 +22,13 @@ export class ProductEditComponent implements OnInit {
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/user-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/plus-svgrepo-com.svg';
+  imgSrc4: string = 'assets/svg/trash-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   authorArray: Array<string> = [];
   fileName: string | null = 'No file chosen';
   productId: string = '';
   productForm: FormGroup<ProductForm>;
+  hoveredIndex: number | null = null;
 
   @ViewChild('a') authorInput!: ElementRef;
 
@@ -70,8 +72,8 @@ export class ProductEditComponent implements OnInit {
 
   onSubmit() {
     const formValue = this.productForm.value;
-    let submitData
-    if(formValue.image === this.productsDataById.image) {
+    let submitData;
+    if (formValue.image === this.productsDataById.image) {
       submitData = {
         link: formValue.link,
         title: formValue.title,
@@ -85,6 +87,19 @@ export class ProductEditComponent implements OnInit {
     }
 
     console.log('Form Submitted:', submitData);
+  }
+
+  OnHover(index: number | null) {
+    if (index === null) {
+      this.hoveredIndex = null;
+      return;
+    }
+    this.hoveredIndex = index;
+  }
+
+  DeleteAuthor(index: number) {
+    this.authorArray.splice(index, 1);
+    this.productForm.get('author')?.setValue(this.authorArray);
   }
 
   productsDataById = {
