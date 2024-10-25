@@ -12,6 +12,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AdminComponent } from './pages/dashboard/admin/admin.component';
 import { UsersComponent } from './pages/dashboard/users/users.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
+import { UserAdminComponent } from './pages/edit/user-admin/user-admin.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,10 @@ export const routes: Routes = [
   {
     path: 'edit',
     component: EditComponent,
+  },
+  {
+    path: 'edit/users',
+    component: UserAdminComponent,
   },
   {
     path: 'dashboard',
