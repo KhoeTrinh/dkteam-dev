@@ -15,7 +15,7 @@
         class="mx-6 absolute left-1/2 -translate-x-[85%] -top-3"
       />
     </div>
-    <form class="overflow-hidden">
+    <form>
       @for(inputValue of inputValues; track inputValue) {
       <div class="mt-5 mx-20">
         <label class="block text-sm font-medium text-gray-700">{{
@@ -28,19 +28,22 @@
         />
       </div>
       }
-      <div class="flex mt-5 mx-20 w-[calc((100%-10rem)*3)]">
-        @for(inputValue of inputValues2; track inputValue) {
-        <div class="w-full">
-          <label class="block text-sm font-medium text-gray-700"
-            >{{ inputValue | capitalizeFirst }} Password</label
-          >
-          <input
-            type="password"
-            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Confirm your {{ inputValue }} password"
-          />
+      <div class="mx-20 overflow-hidden">
+        <div class="flex mt-5 w-[calc(100%*3)]" id="slider">
+          @for(inputValue of inputValues2; track inputValue; let i = $index) {
+          <div class="w-full">
+            <label class="block text-sm font-medium text-gray-700"
+              >{{ inputValue | capitalizeFirst }}</label
+            >
+            <input
+              type="password"
+              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Enter your {{ inputValue }}"
+              (focus)="updateCurrentIndex(i)"
+            />
+          </div>
+          }
         </div>
-        }
       </div>
       <div class="mt-1 mx-20 flex flex-col space-y-1.5">
         <div class="flex justify-between">
@@ -49,19 +52,23 @@
             alt=""
             width="30"
             height="30"
-            class="-rotate-90"
+            class="-rotate-90 {{ currentIndex > 0 ? '' : 'opacity-0' }} "
+            (click)="currentIndex > 0 && moveSlider(-1)"
           />
           <img
             [ngSrc]="imgSrc5"
             alt=""
             width="30"
             height="30"
-            class="rotate-90"
+            class="rotate-90 {{
+              currentIndex < inputValues2.length - 1 ? '' : 'opacity-0'
+            }} "
+            (click)="currentIndex < inputValues2.length - 1 && moveSlider(1)"
           />
         </div>
         <div>
           <button
-            type="submit"
+            type="button"
             class="appearance-none block w-full px-3 py-2 {{
               bgClass
             }} text-white rounded-md sm:text-sm"
