@@ -53,22 +53,7 @@ export class UsersComponent {
       username: 'khoa',
       email: 'khoa@example.com',
       userImage: this.imgSrc2,
-      authorProd: [
-        {
-          author: {
-            id: 3,
-            title: 'khoa product',
-            productImage: this.imgSrc4,
-          },
-        },
-        {
-          author: {
-            id: 4,
-            title: 'khoa product 2',
-            productImage: this.imgSrc4,
-          },
-        },
-      ],
+      authorProd: [],
       aboutme: {
         title: 'khoa',
         description: 'khoa is a great',
@@ -80,22 +65,7 @@ export class UsersComponent {
       username: 'khoa',
       email: 'khoa@example.com',
       userImage: this.imgSrc2,
-      authorProd: [
-        {
-          author: {
-            id: 5,
-            title: 'khoa product',
-            productImage: this.imgSrc4,
-          },
-        },
-        {
-          author: {
-            id: 6,
-            title: 'khoa product 2',
-            productImage: this.imgSrc4,
-          },
-        },
-      ],
+      authorProd: [],
       aboutme: {
         title: 'khoa',
         description: 'khoa is a great',
@@ -107,22 +77,7 @@ export class UsersComponent {
       username: 'khoa',
       email: 'khoa@example.com',
       userImage: this.imgSrc2,
-      authorProd: [
-        {
-          author: {
-            id: 7,
-            title: 'khoa product',
-            productImage: this.imgSrc4,
-          },
-        },
-        {
-          author: {
-            id: 8,
-            title: 'khoa product 2',
-            productImage: this.imgSrc4,
-          },
-        },
-      ],
+      authorProd: [],
       aboutme: {
         title: 'khoa',
         description: 'khoa is a great',
@@ -149,6 +104,20 @@ export class UsersComponent {
             productImage: this.imgSrc4,
           },
         },
+        {
+          author: {
+            id: 10,
+            title: 'khoa product 2',
+            productImage: this.imgSrc4,
+          },
+        },
+        {
+          author: {
+            id: 10,
+            title: 'khoa product 2',
+            productImage: this.imgSrc4,
+          },
+        },
       ],
       aboutme: {
         title: 'khoa',
@@ -161,22 +130,7 @@ export class UsersComponent {
       username: 'khoa',
       email: 'khoa@example.com',
       userImage: this.imgSrc2,
-      authorProd: [
-        {
-          author: {
-            id: 11,
-            title: 'khoa product',
-            productImage: this.imgSrc4,
-          },
-        },
-        {
-          author: {
-            id: 12,
-            title: 'khoa product 2',
-            productImage: this.imgSrc4,
-          },
-        },
-      ],
+      authorProd: [],
       aboutme: {
         title: 'khoa',
         description: 'khoa is a great',
