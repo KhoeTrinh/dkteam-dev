@@ -63,7 +63,7 @@
             <div>Developer:</div>
             <div class="w-6 h-6 border rounded-md" (click)="toggleDev(user)">
               @if(user.isDev) {
-              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" />
+              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" class="select-none" />
               }
             </div>
           </div>
@@ -71,7 +71,7 @@
             <div>Admin:</div>
             <div class="w-6 h-6 border rounded-md" (click)="toggleAdmin(user)">
               @if(user.isAdmin) {
-              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" />
+              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" class="select-none"/>
               }
             </div>
           </div>
@@ -81,7 +81,7 @@
               class="w-6 h-6 rounded-md p-px border {{ getBgClass(user) }}"
               (click)="resetUserImage(user)"
             >
-              <img [ngSrc]="imgSrc7" alt="" width="30" height="30" />
+              <img [ngSrc]="imgSrc7" alt="" width="30" height="30" class="select-none" />
             </div>
           </div>
         </div>

@@ -13,6 +13,7 @@ import { AdminComponent } from './pages/dashboard/admin/admin.component';
 import { UsersComponent } from './pages/dashboard/users/users.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { UserAdminComponent } from './pages/edit/user-admin/user-admin.component';
+import { CreateComponent } from './pages/create/create.component';
 
 export const routes: Routes = [
   {
@@ -71,4 +72,8 @@ export const routes: Routes = [
     path: 'dashboard/products/:id',
     component: ProductEditComponent,
   },
+  {
+    path: 'create',
+    component: CreateComponent
+  }
 ];

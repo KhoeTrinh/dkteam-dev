@@ -4,14 +4,15 @@
       <div>Products</div>
     </div>
     <div class="flex items-center -mb-3 space-x-3">
-      <div
+      <a
+      routerLink="/create"
         class="flex items-center {{
           bgClass
         }} rounded-md text-white px-2 py-1.5 space-x-1 w-[9.2rem] ml-10"
       >
         <div class="text-lg font-semibold">Create new</div>
         <img [ngSrc]="imgSrc4" alt="" width="26" height="26" />
-      </div>
+      </a>
       <div class="relative">
         <img
           [ngSrc]="imgSrc5"

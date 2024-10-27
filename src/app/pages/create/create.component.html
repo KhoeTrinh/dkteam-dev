@@ -1,0 +1,88 @@
+<div class="max-w-3xl w-full h-full mx-auto pt-5 pb-7">
+  <div class="w-auto h-full bg-white mx-20 mt-6 p-3 rounded-xl">
+    <div class="flex flex-col items-center mt-10 space-y-2">
+      <div class="text-3xl">Create a new product</div>
+      <div class="h-6 mt-2"></div>
+    </div>
+    <div class="text-lg font-medium">Product Image:</div>
+    <div class="mt-2 ml-2 h-10 font-extralight">Contact a Admin user for getting product image</div>
+    <form class="space-y-2" [formGroup]="productForm">
+      <div class="w-full flex justify-between">
+        <div class="w-[45%]">
+          <label class="text-lg font-medium">Product Link:</label>
+          <input
+            formControlName="link"
+            class="mt-2 ml-2 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            placeholder="Enter your product link"
+          />
+        </div>
+        <div class="w-[45%]">
+          <label class="text-lg font-medium">Product Name:</label>
+          <input
+            formControlName="title"
+            class="mt-2 ml-2 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            placeholder="Enter your product name"
+          />
+        </div>
+      </div>
+      <div class="w-full flex justify-between min-h-[12.5rem]">
+        <div class="w-[45%]">
+          <label class="text-lg font-medium">Product Description:</label>
+          <textarea
+            formControlName="description"
+            class="transition-none mt-2 ml-2 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm min-h-10 h-40 max-h-40"
+            placeholder="Enter your product description"
+          ></textarea>
+        </div>
+        <div class="w-[45%]">
+          <label class="text-lg font-medium">Product Author:</label>
+          <div class="flex justify-between items-center">
+            <input
+              #a
+              class="mt-2 ml-2 appearance-none block w-3/4 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Add product author id"
+            />
+            <button
+              (click)="addAuthor(a)"
+              type="button"
+              class="w-[37.6px] h-[37.6px] {{
+                bgClass
+              }} mt-2 ml-2 rounded-md px-2 py-2"
+            >
+              <img [ngSrc]="imgSrc" alt="" width="30" height="30" />
+            </button>
+          </div>
+          <div
+            class="mt-2 ml-2 space-y-1 max-h-[114.4px] overflow-y-scroll rounded-md"
+          >
+            @for(author of authorArray; track author; let i = $index) {
+            <div
+              class="inline-block text-xs mr-1 px-2 py-1.5 rounded-md {{
+                bgClass
+              }} text-white text-center overflow-hidden whitespace-nowrap overflow-ellipsis min-w-[90%] max-w-[90%]"
+              (click)="DeleteAuthor(i)"
+              (mouseenter)="OnHover(i)"
+              (mouseleave)="OnHover(null)"
+            >
+              @if(hoveredIndex === i) {
+              <div class="flex justify-center">
+                <img [ngSrc]="imgSrc2" alt="" width="16" height="16" />
+              </div>
+              } @else {
+              {{ author }}
+              }
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        (click)="onSubmit()"
+        class="w-full rounded-md text-white {{ bgClass }} h-10"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

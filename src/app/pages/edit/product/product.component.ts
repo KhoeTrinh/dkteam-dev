@@ -85,8 +85,6 @@ export class ProductEditComponent implements OnInit {
         image: formValue.image,
       };
     }
-
-    console.log('Form Submitted:', submitData);
   }
 
   OnHover(index: number | null) {
