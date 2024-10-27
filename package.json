@@ -20,6 +20,7 @@
     "@angular/router": "^18.2.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.5",
     "framer-motion": "^11.11.9",
     "postcss": "^8.4.47",
     "rxjs": "~7.8.0",

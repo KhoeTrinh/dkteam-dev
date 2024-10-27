@@ -3,5 +3,25 @@
     <div class="flex justify-center text-3xl mt-10 pb-5 mx-3 text-center">
       <div>Admin</div>
     </div>
+    <div class="relative w-20 h-20 flex items-center justify-center">
+      <div
+        class="w-full h-full rounded-full"
+        [ngStyle]="{
+          background:
+            'conic-gradient(from 0deg, #3b82f6 0% ' +
+            numberDegree +
+            '%, #e5e7eb ' +
+            numberDegree +
+            '% 100%)'
+        }"
+      ></div>
+      <div class="absolute w-16 h-16 bg-white rounded-full"></div>
+      <div class="absolute text-xl font-bold text-gray-700">
+        {{ numberDegree }}%
+      </div>
+    </div>
+    <div class="w-60 h-60">
+      <app-chart></app-chart>
+    </div>
   </div>
 </div>
