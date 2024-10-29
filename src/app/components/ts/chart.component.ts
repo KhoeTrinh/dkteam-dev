@@ -106,7 +106,7 @@ export class ChartComponent implements AfterViewInit {
         scales: {
           x: {
             grid: {
-              display: false, // Hide vertical grid lines for a cleaner look
+              display: false,
             },
             ticks: {
               color: '#4a4a4a',
@@ -117,27 +117,24 @@ export class ChartComponent implements AfterViewInit {
           },
           y: {
             grid: {
-              color: 'rgba(200, 200, 200, 0.3)', // Lighten horizontal grid lines
-              // border: {
-              //   dash: [5, 5], // Updated to apply dashed grid lines correctly
-              // },
+              color: 'rgba(200, 200, 200, 0.3)',
             },
             ticks: {
               color: '#4a4a4a',
               font: {
                 size: 10,
               },
-              padding: 8, // Add padding between labels and axis for readability
+              padding: 8,
             },
           },
         },
         elements: {
           line: {
-            tension: 0.3, // Smooth out line curves for a more polished look
+            tension: 0.3,
           },
           point: {
-            radius: 3, // Reduce point radius for less visual clutter
-            hoverRadius: 5, // Slightly increase hover radius for focus on hover
+            radius: 3,
+            hoverRadius: 5,
           },
         },
       },
