@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -12,65 +12,136 @@ Chart.register(...registerables);
 export class ChartComponent implements AfterViewInit {
   private chart: Chart | undefined;
 
+  @Input() data: any = null
+
   @ViewChild('chart') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
   ngAfterViewInit(): void {
     this.createChart();
+    console.log(this.data);
   }
 
   private createChart() {
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
+
+    const timeline = {
+      week: [
+        'Week 1',
+        'Week 2',
+        'Week 3',
+        'Week 4',
+        'Week 5',
+        'Week 6',
+        'Week 7',
+      ],
+      month: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
+      year: [],
+    };
 
     if (!ctx) {
       console.error('Failed to get canvas context');
       return;
     }
 
+    const labels = this.data.type === 'week' ? timeline.week
+    : this.data.type === 'month' ? timeline.month
+    : this.data.type === 'year' ? timeline.year
+    : [];
+
+    const datasets = this.data.data.labels.map((label: string, i: number) => ({
+      label: label,
+      data: this.data.data.data[i],
+      fill: true,
+      backgroundColor: `rgba(${this.data.data.color[i].join(',')}, 0.2)`,
+      borderColor: `rgba(${this.data.data.color[i].join(',')}, 1)`,
+      tension: 0.1,
+    }))
+
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [
-          'Week 1',
-          'Week 2',
-          'Week 3',
-          'Week 4',
-          'Week 5',
-          'Week 6',
-          'Week 7',
-        ],
-        datasets: [
-          {
-            label: 'User Growth',
-            data: [12, 19, 3, 5, 2, 3, 15],
-            fill: true,
-            backgroundColor: 'rgba(59, 130, 247, 0.2)',
-            borderColor: 'rgba(59, 130, 247, 1)',
-            tension: 0.1,
-          },
-          {
-            label: 'New Users',
-            data: [5, 10, 2, 8, 3, 6, 12],
-            fill: true,
-            backgroundColor: 'rgba(34, 197, 94, 0.2)',
-            borderColor: 'rgba(34, 197, 94, 1)',
-            tension: 0.1,
-          },
-        ],
+        labels: labels,
+        datasets: datasets
       },
       options: {
         responsive: true,
         plugins: {
           legend: {
-            display: false,
+            display: true,
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 12,
+                weight: 'bold',
+              },
+              color: '#4a4a4a',
+              padding: 15,
+              usePointStyle: true,
+              boxWidth: 10,
+              boxHeight: 10,
+            },
           },
           tooltip: {
             enabled: true,
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
             titleColor: '#fff',
             bodyColor: '#fff',
+            padding: 10,
+            cornerRadius: 4,
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false, // Hide vertical grid lines for a cleaner look
+            },
+            ticks: {
+              color: '#4a4a4a',
+              font: {
+                size: 10,
+              },
+            },
+          },
+          y: {
+            grid: {
+              color: 'rgba(200, 200, 200, 0.3)', // Lighten horizontal grid lines
+              // border: {
+              //   dash: [5, 5], // Updated to apply dashed grid lines correctly
+              // },
+            },
+            ticks: {
+              color: '#4a4a4a',
+              font: {
+                size: 10,
+              },
+              padding: 8, // Add padding between labels and axis for readability
+            },
+          },
+        },
+        elements: {
+          line: {
+            tension: 0.3, // Smooth out line curves for a more polished look
+          },
+          point: {
+            radius: 3, // Reduce point radius for less visual clutter
+            hoverRadius: 5, // Slightly increase hover radius for focus on hover
           },
         },
       },
+
     });
   }
 }
