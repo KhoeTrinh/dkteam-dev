@@ -1,4 +1,10 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Input,
+} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -12,13 +18,12 @@ Chart.register(...registerables);
 export class ChartComponent implements AfterViewInit {
   private chart: Chart | undefined;
 
-  @Input() data: any = null
+  @Input() data: any = null;
 
   @ViewChild('chart') chartCanvas!: ElementRef<HTMLCanvasElement>;
 
   ngAfterViewInit(): void {
     this.createChart();
-    console.log(this.data);
   }
 
   private createChart() {
@@ -56,10 +61,14 @@ export class ChartComponent implements AfterViewInit {
       return;
     }
 
-    const labels = this.data.type === 'week' ? timeline.week
-    : this.data.type === 'month' ? timeline.month
-    : this.data.type === 'year' ? timeline.year
-    : [];
+    const labels =
+      this.data.type === 'week'
+        ? timeline.week
+        : this.data.type === 'month'
+        ? timeline.month
+        : this.data.type === 'year'
+        ? timeline.year
+        : [];
 
     const datasets = this.data.data.labels.map((label: string, i: number) => ({
       label: label,
@@ -68,16 +77,17 @@ export class ChartComponent implements AfterViewInit {
       backgroundColor: `rgba(${this.data.data.color[i].join(',')}, 0.2)`,
       borderColor: `rgba(${this.data.data.color[i].join(',')}, 1)`,
       tension: 0.1,
-    }))
+    }));
 
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
-        datasets: datasets
+        datasets: datasets,
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: true,
@@ -96,11 +106,26 @@ export class ChartComponent implements AfterViewInit {
           },
           tooltip: {
             enabled: true,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            titleColor: '#fff',
-            bodyColor: '#fff',
-            padding: 10,
-            cornerRadius: 4,
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            titleColor: '#ffffff',
+            bodyColor: '#f0f0f0',
+            titleFont: {
+              size: 14,
+              weight: 'bold',
+            },
+            bodyFont: {
+              size: 12,
+            },
+            padding: 12,
+            cornerRadius: 6,
+            borderColor: '#3b82f6',
+            borderWidth: 1,
+            displayColors: false,
+            callbacks: {
+              label: function (tooltipItem) {
+                return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+              },
+            },
           },
         },
         scales: {
@@ -138,7 +163,6 @@ export class ChartComponent implements AfterViewInit {
           },
         },
       },
-
     });
   }
 }

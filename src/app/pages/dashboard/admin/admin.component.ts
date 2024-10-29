@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit {
       labels: ['New User', 'Nf login', 'Nf products', 'Incomes'],
       data: [
         [12, 19, 3, 5, 2, 3, 15],
-        [1, 2, 3, 4, 5, 6, 7],
+        [1, 3, 25, 12, 5, 6, 7],
         [2, 5, 1, 6, 3, 6, 3],
         [12, 5, 23, 6, 13, 1, 5],
       ],
@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
         [200, 123, 234],
         [123, 0, 123],
       ],
-      value: [100, 100, 40, 99],
+      value: [100, 100, 40, 54],
     },
   };
 
@@ -40,5 +40,15 @@ export class AdminComponent implements OnInit {
       const actual = this.dashboardData.data.value[index];
       return actual ? Math.round((actual / target) * 100) : 0;
     });
+  }
+
+  rgbToHex(rgb: [number, number, number]): string {
+    const [r, g, b] = rgb;
+    return (
+      '#' +
+      r.toString(16).padStart(2, '0') +
+      g.toString(16).padStart(2, '0') +
+      b.toString(16).padStart(2, '0')
+    );
   }
 }

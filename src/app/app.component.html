@@ -1,5 +1,7 @@
-<app-navbar [user]="isUser" [admin]="isAdmin" [userData]="userData" />
-<div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal' ">
-  <router-outlet />
+<app-navbar [user]="isUser" [role]="role" [userData]="userData"></app-navbar>
+
+<div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal'">
+  <router-outlet></router-outlet>
 </div>
-<app-footer />
+
+<app-footer></app-footer>

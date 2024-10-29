@@ -27,7 +27,7 @@ export class NavbarComponent {
   isMenuOpen2: boolean = false;
 
   @Input() user: boolean = false;
-  @Input() admin: boolean = false;
+  @Input() role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   @Input() userData: any = '';
 
   constructor(private widthCheck: WidthCheckService, private eRef: ElementRef) {
