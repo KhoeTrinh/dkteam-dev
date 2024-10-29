@@ -5,7 +5,7 @@
     </div>
     <div class="flex items-center -mb-3 space-x-3">
       <a
-      routerLink="/create"
+        routerLink="/create"
         class="flex items-center {{
           bgClass
         }} rounded-md text-white px-2 py-1.5 space-x-1 w-[9.2rem] ml-10"
@@ -31,16 +31,23 @@
         />
       </div>
     </div>
-    @for(product of productArray; track product.id) {
-    <app-product-element [productData]="product" class="relative" />
-    <a
-      routerLink="/dashboard/products/{{ product.id }}"
-      class="absolute {{
-        bgClass
-      }} w-10 h-10 rounded-md -mt-[9.6%] ml-[10%] flex justify-center items-center"
-    >
-      <img [ngSrc]="imgSrc3" alt="" width="30" height="30" />
-    </a>
+    @for(product of productArray; track product.id; let i = $index) {
+    <div class="relative">
+      <app-product-element
+        [productData]="product"
+        (commentOpenChange)="handleCommentOpen($event, i)"
+      />
+      <a
+        routerLink="{{ role.isAdmin ? product.id : '/dashboard/products' }}"
+        class="absolute {{
+          bgClass
+        }} left-[5%] w-10 h-10 rounded-md -mt-[9.6%] ml-[10%] flex justify-center items-center {{
+          role.isAdmin ? '' : 'blur-[2px] cursor-not-allowed '
+        }} {{ commentOpen[i] ? 'bottom-[45%] translate-y-[60%]' : ' bottom-[10%] translate-y-[5%]' }}"
+      >
+        <img [ngSrc]="imgSrc3" alt="" width="30" height="30" />
+      </a>
+    </div>
     }
   </div>
 </div>

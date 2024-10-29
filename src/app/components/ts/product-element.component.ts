@@ -1,5 +1,5 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -24,6 +24,7 @@ export class ProductElementComponent implements OnInit {
   comments: any = ''
 
   @Input() productData: any = ''
+  @Output() commentOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit() {
     this.authors = this.productData.author
@@ -32,6 +33,6 @@ export class ProductElementComponent implements OnInit {
   commentClick(e: Event) {
     e.preventDefault();
     this.commentOpen = !this.commentOpen;
-    console.log(this.productData);
+    this.commentOpenChange.emit(this.commentOpen)
   }
 }

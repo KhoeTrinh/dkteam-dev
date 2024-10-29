@@ -1,7 +1,8 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductElementComponent } from '../../../components/ts/product-element.component';
 import { RouterLink } from '@angular/router';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
   selector: 'app-products',
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/user-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/pen-square-svgrepo-com-white.svg';
@@ -18,9 +19,24 @@ export class ProductsComponent {
   imgSrc5: string = 'assets/svg/search-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   isExpanded: boolean = false;
+  commentOpen: boolean[] = []
+  role: any
+
+  constructor(private roleService: RoleService) {}
+
+  ngOnInit(): void {
+    this.role = this.roleService.getRole()
+    this.commentOpen = new Array(this.productArray.length).fill(false);
+  }
+
   toggleInputWidth() {
     this.isExpanded = !this.isExpanded;
   }
+
+  handleCommentOpen(commentOpen: boolean, i: number) {
+    this.commentOpen[i] = commentOpen
+  }
+
   productArray: Array<any> = [
     {
       id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',

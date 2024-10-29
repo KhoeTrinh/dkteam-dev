@@ -23,6 +23,5 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
       this.role = this.roleService.getRole()
-      console.log(this.role);
   }
 }
