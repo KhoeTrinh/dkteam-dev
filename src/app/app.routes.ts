@@ -14,6 +14,8 @@ import { UsersComponent } from './pages/dashboard/users/users.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { UserAdminComponent } from './pages/edit/user-admin/user-admin.component';
 import { CreateComponent } from './pages/create/create.component';
+import { NotLogged } from './guards/not-logged.guard';
+import { Logged } from './guards/logged.guard';
 
 export const routes: Routes = [
   {
@@ -35,10 +37,12 @@ export const routes: Routes = [
   {
     path: 'signin',
     component: SigninComponent,
+    canActivate: [NotLogged],
   },
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [NotLogged],
   },
   {
     path: 'products/:id',
@@ -47,33 +51,45 @@ export const routes: Routes = [
   {
     path: 'edit',
     component: EditComponent,
+    canActivate: [Logged],
   },
   {
     path: 'edit/users',
     component: UserAdminComponent,
+    canActivate: [Logged],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [Logged],
   },
   {
     path: 'dashboard/admin',
     component: AdminComponent,
+    canActivate: [Logged],
   },
   {
     path: 'dashboard/users',
     component: UsersComponent,
+    canActivate: [Logged],
   },
   {
     path: 'dashboard/products',
     component: ProductsComponent,
+    canActivate: [Logged],
   },
   {
     path: 'dashboard/products/:id',
     component: ProductEditComponent,
+    canActivate: [Logged],
   },
   {
     path: 'create',
-    component: CreateComponent
-  }
+    component: CreateComponent,
+    canActivate: [Logged],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

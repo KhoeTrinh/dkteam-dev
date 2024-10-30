@@ -70,7 +70,7 @@
       <a
         class="px-2 py-2 bg-white rounded-md text-black mr-2"
         routerLink=""
-        (click)="closeMenu2()"
+        (click)="closeMenu2(); signout()"
       >
         <img [ngSrc]="imgSrc3" alt="" width="20" height="20" />
       </a>
@@ -144,7 +144,7 @@
           <a
             routerLink=""
             class="{{ aClass2 }} text-cyan-200"
-            (click)="closeMenu()"
+            (click)="closeMenu(); signout()"
           >
             Log Out
           </a>

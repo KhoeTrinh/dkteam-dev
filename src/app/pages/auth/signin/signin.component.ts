@@ -1,8 +1,9 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -20,10 +21,19 @@ export class SigninComponent {
   inputValues: Array<string> = ['email', 'password'];
   innerWidth: number = 0;
 
-  constructor(private widthCheck: WidthCheckService) {
+  constructor(
+    private widthCheck: WidthCheckService,
+    private userService: UserService,
+    private router: Router
+  ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
       this.innerWidth = this.widthCheck.innerWidth;
     });
+  }
+
+  signin() {
+    this.userService.setUser(true);
+    this.router.navigate([''])
   }
 }

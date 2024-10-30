@@ -1,7 +1,16 @@
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  Component,
+  DoCheck,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { NgOptimizedImage } from '@angular/common';
 import { WidthCheckService } from '../../services/width-check.service';
+import { UserService } from '../../services/user.service';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +19,7 @@ import { WidthCheckService } from '../../services/width-check.service';
   templateUrl: '../html/navbar.component.html',
   styleUrl: '../css/navbar.component.css',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, DoCheck {
   imgSrc: string = 'assets/svg/logo-no-background.svg';
   imgSrc2: string = 'assets/svg/menu-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/logout-svgrepo-com.svg';
@@ -25,12 +34,18 @@ export class NavbarComponent {
   innerWidth: number = 0;
   isMenuOpen: boolean = false;
   isMenuOpen2: boolean = false;
+  user: boolean = false;
+  role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
 
-  @Input() user: boolean = false;
-  @Input() role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   @Input() userData: any = '';
 
-  constructor(private widthCheck: WidthCheckService, private eRef: ElementRef) {
+  constructor(
+    private widthCheck: WidthCheckService,
+    private eRef: ElementRef,
+    private userService: UserService,
+    private roleService: RoleService,
+    private router: Router
+  ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
       this.innerWidth = this.widthCheck.innerWidth;
@@ -40,6 +55,14 @@ export class NavbarComponent {
         this.isMenuOpen2 = false;
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.role = this.roleService.getRole();
+  }
+
+  ngDoCheck(): void {
+    this.user = this.userService.getUser();
   }
 
   openMenu() {
@@ -56,6 +79,14 @@ export class NavbarComponent {
 
   closeMenu2() {
     this.isMenuOpen2 = false;
+  }
+
+  signout() {
+    this.userService.setUser(false);
+    this.roleService.setRole({ isDev: false, isAdmin: false });
+    this.router.navigate(['']);
+    this.isMenuOpen2 = false;
+    this.isMenuOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
