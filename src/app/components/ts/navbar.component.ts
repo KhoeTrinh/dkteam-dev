@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   DoCheck,
   ElementRef,
@@ -19,7 +20,7 @@ import { RoleService } from '../../services/role.service';
   templateUrl: '../html/navbar.component.html',
   styleUrl: '../css/navbar.component.css',
 })
-export class NavbarComponent implements OnInit, DoCheck {
+export class NavbarComponent implements DoCheck {
   imgSrc: string = 'assets/svg/logo-no-background.svg';
   imgSrc2: string = 'assets/svg/menu-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/logout-svgrepo-com.svg';
@@ -57,12 +58,9 @@ export class NavbarComponent implements OnInit, DoCheck {
     });
   }
 
-  ngOnInit(): void {
-    this.role = this.roleService.getRole();
-  }
-
   ngDoCheck(): void {
     this.user = this.userService.getUser();
+    this.role = this.roleService.getRole()
   }
 
   openMenu() {

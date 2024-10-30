@@ -4,6 +4,7 @@ import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
 import { UserService } from '../../../services/user.service';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
   selector: 'app-signin',
@@ -24,6 +25,7 @@ export class SigninComponent {
   constructor(
     private widthCheck: WidthCheckService,
     private userService: UserService,
+    private roleService: RoleService,
     private router: Router
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
@@ -34,6 +36,7 @@ export class SigninComponent {
 
   signin() {
     this.userService.setUser(true);
+    this.roleService.setRole({ isDev: true, isAdmin: false });
     this.router.navigate([''])
   }
 }
