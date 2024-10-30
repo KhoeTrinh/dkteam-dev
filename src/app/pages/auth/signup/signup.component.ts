@@ -37,7 +37,7 @@ export class SignupComponent {
 
   signup() {
     this.userService.setUser(true);
-    this.roleService.setRole({ isDev: false, isAdmin: false });
+    this.roleService.setRole({ isDev: true, isAdmin: true });
     this.router.navigate(['']);
   }
 }

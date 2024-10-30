@@ -1,84 +1,111 @@
-import { NgOptimizedImage } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Renderer2,
+  OnInit,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-productsdetails',
   standalone: true,
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, DatePipe],
   templateUrl: './productsdetails.component.html',
   styleUrl: './productsdetails.component.css',
 })
-export class ProductsdetailsComponent implements AfterViewInit {
+export class ProductsdetailsComponent implements OnInit, AfterViewInit {
   tClass: string = `bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))]
   from-zinc-800 via-indigo-900 to-gray-300 bg-clip-text text-transparent`;
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   imgSrc: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc2: string = 'assets/svg/status-up-svgrepo-com.svg';
-  imgSrc3: string = 'assets/svg/date-range-svgrepo-com.svg'
-  prodAnimation = {
-    classesToAdd: ['flex', 'justify-evenly', 'py-10', 'relative', 'mx-10'],
-    imgElements: [
+  imgSrc3: string = 'assets/svg/date-range-svgrepo-com.svg';
+  productId: string = '';
+
+  productsDataById = {
+    id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',
+    link: 'https://www.youtube.com/watch?v=T9ABgBIYS1g',
+    title: 'File Sharing',
+    description: 'A product created primarily for file sharing',
+    publishDate: '2024-10-10T01:37:55.866Z',
+    image: this.imgSrc,
+    author: [
       {
-        src: 'assets/svg/user-svgrepo-com.svg',
-        width: '30',
-        height: '30',
-        classes: [],
+        authorProd: {
+          userImage: 'assets/svg/user-svgrepo-com.svg',
+          username: 'Khoa',
+          id: '1',
+        },
       },
       {
-        src: 'assets/svg/arrow-narrow-right-svgrepo-com-black.svg',
-        width: '30',
-        height: '30',
-        classes: [],
+        authorProd: {
+          userImage: 'assets/svg/user-svgrepo-com.svg',
+          username: 'Khoa',
+          id: '2',
+        },
       },
       {
-        src: 'assets/svg/user-svgrepo-com.svg',
-        width: '30',
-        height: '30',
-        classes: [],
+        authorProd: {
+          userImage: 'assets/svg/user-svgrepo-com.svg',
+          username: 'Khoa',
+          id: '3',
+        },
       },
       {
-        src: 'assets/svg/file-pencil-alt-svgrepo-com.svg',
-        width: '30',
-        height: '30',
-        classes: ['animation-img'],
+        authorProd: {
+          userImage: 'assets/svg/user-svgrepo-com.svg',
+          username: 'Khoa',
+          id: '4',
+        },
       },
     ],
+    prodAnimation: {
+      classesToAdd: ['flex', 'justify-evenly', 'py-10', 'relative', 'mx-10'],
+      imgElements: [
+        {
+          src: 'assets/svg/user-svgrepo-com.svg',
+          width: '30',
+          height: '30',
+          classes: [],
+        },
+        {
+          src: 'assets/svg/arrow-narrow-right-svgrepo-com-black.svg',
+          width: '30',
+          height: '30',
+          classes: [],
+        },
+        {
+          src: 'assets/svg/user-svgrepo-com.svg',
+          width: '30',
+          height: '30',
+          classes: [],
+        },
+        {
+          src: 'assets/svg/file-pencil-alt-svgrepo-com.svg',
+          width: '30',
+          height: '30',
+          classes: ['animation-img'],
+        },
+      ],
+    },
   };
-  devArray: any = [
-    {
-      id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',
-      name: 'John Doe',
-      imgSrc: 'assets/svg/user-svgrepo-com.svg',
-    },
-    {
-      id: '0c548a0a-4914-42f8-a5d0-887ba5f70',
-      name: 'Jane Doe',
-      imgSrc: 'assets/svg/user-svgrepo-com.svg',
-    },
-    {
-      id: '0c548a0a-4914-42f8-a0-887ba5f70',
-      name: 'June Doe',
-      imgSrc: 'assets/svg/user-svgrepo-com.svg',
-    },
-    {
-      id: '0c548a0a-4914-4123612f8-a5d0-887ba5f70f',
-      name: 'Emily Johnson',
-      imgSrc: 'assets/svg/user-svgrepo-com.svg',
-    },
-    {
-      id: '0c548a0a-4124914-42f8-a5d0-887ba5f70',
-      name: 'Michael Brown',
-      imgSrc: 'assets/svg/user-svgrepo-com.svg',
-    },
-  ];
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private router: ActivatedRoute
+  ) {}
+  ngOnInit(): void {
+    this.productId == this.router.snapshot.paramMap.get('id');
+  }
   ngAfterViewInit() {
     const container = this.el.nativeElement.querySelector('#dynamic-content');
     const div = this.renderer.createElement('div');
-    this.prodAnimation.classesToAdd.forEach((className) => {
+    this.productsDataById.prodAnimation.classesToAdd.forEach((className) => {
       this.renderer.addClass(div, className);
     });
-    this.prodAnimation.imgElements.forEach((element) => {
+    this.productsDataById.prodAnimation.imgElements.forEach((element) => {
       const img = this.renderer.createElement('img');
       this.renderer.setAttribute(img, 'src', element.src);
       this.renderer.setAttribute(img, 'width', element.width);

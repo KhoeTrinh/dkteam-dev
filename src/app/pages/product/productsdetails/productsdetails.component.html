@@ -7,7 +7,7 @@
         <div
           class="w-16 h-16 rounded-full bg-white flex justify-center items-center absolute top-1 left-1 z-50"
         >
-          <img [ngSrc]="imgSrc" alt="" width="40" height="40" />
+          <img [ngSrc]="productsDataById.image" alt="" width="40" height="40" />
         </div>
       </div>
     </div>
@@ -16,13 +16,13 @@
         tClass
       }} text-3xl font-medium flex flex-col items-center pb-3 space-y-2"
     >
-      <div>File Sharing</div>
-      <div class="text-sm">#id: 123567899</div>
+      <div>{{productsDataById.title}}</div>
+      <div class="text-sm">#id: {{productsDataById.id}}</div>
     </div>
     <div id="dynamic-content"></div>
     <div>
       <div class="font-semibold mb-5">
-        Describe: A product created primarily for file sharing
+        Describe: {{productsDataById.description}}
       </div>
       <div class="flex justify-between mx-5">
         <div class="flex flex-col justify-center mb-5">
@@ -32,19 +32,19 @@
           </div>
           <div class="flex items-center">
             <img [ngSrc]="imgSrc3" alt="" width="20" height="20" />
-            <div class="ml-2">Created: 2021-12-31</div>
+            <div class="ml-2">Created: {{productsDataById.publishDate | date}}</div>
           </div>
         </div>
         <div class="flex flex-col items-center mb-5">
           <div class="font-bold mb-4">Our wonderful Author</div>
           <div class="flex -space-x-4">
-            @for(dev of devArray; track dev.id) {
+            @for(dev of productsDataById.author; track dev.authorProd.id) {
               <div
                 class="flex justify-center items-center w-9 h-9 bg-white shadow-md rounded-full"
               >
                 <div class="w-[1.75rem] h-[1.75rem] rounded-full bg-white">
                   <img
-                    ngSrc="{{dev.imgSrc}} "
+                    ngSrc="{{dev.authorProd.userImage}} "
                     alt=""
                     className="inline-block object-cover h-10 w-10 rounded-full ring-2 ring-slate-100"
                     width="30"
