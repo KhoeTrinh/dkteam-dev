@@ -31,11 +31,12 @@
       }
       <div class="mx-20 overflow-hidden">
         <div class="flex mt-5 w-[calc(100%*3)]" id="slider">
-          @for(inputValue of inputValues2; track inputValue.label; let i = $index) {
+          @for(inputValue of inputValues2; track inputValue.label; let i =
+          $index) {
           <div class="w-full">
-            <label class="block text-sm font-medium text-gray-700"
-              >{{ inputValue.label | capitalizeFirst }}</label
-            >
+            <label class="block text-sm font-medium text-gray-700">{{
+              inputValue.label | capitalizeFirst
+            }}</label>
             <input
               type="password"
               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -57,6 +58,16 @@
             class="-rotate-90 {{ currentIndex > 0 ? '' : 'opacity-0' }} "
             (click)="currentIndex > 0 && moveSlider(-1)"
           />
+          <div class="flex items-center">
+            <a
+              routerLink="/edit2"
+              class=" {{
+                bgClass
+              }} text-white rounded-md p-1.5 flex items-center text-sm"
+              >More
+              <img [ngSrc]="imgSrc7" alt="" width="20" height="20" class="-mr-1" />
+            </a>
+          </div>
           <img
             [ngSrc]="imgSrc5"
             alt=""

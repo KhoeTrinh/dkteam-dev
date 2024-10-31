@@ -13,9 +13,12 @@ import { AdminComponent } from './pages/dashboard/admin/admin.component';
 import { UsersComponent } from './pages/dashboard/users/users.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { UserAdminComponent } from './pages/edit/user-admin/user-admin.component';
-import { CreateComponent } from './pages/create/create.component';
+import { CreateComponent } from './pages/create/user/create.component';
 import { NotLogged } from './guards/not-logged.guard';
 import { Logged } from './guards/logged.guard';
+import { UserAdditionalComponent } from './pages/edit/user-additional/user-additional.component';
+import { AboutmeComponent } from './pages/create/aboutme/aboutme.component';
+import { AboutmesComponent } from './pages/edit/aboutme/aboutme.component';
 
 export const routes: Routes = [
   {
@@ -54,8 +57,18 @@ export const routes: Routes = [
     canActivate: [Logged],
   },
   {
+    path: 'edit2',
+    component: UserAdditionalComponent,
+    canActivate: [Logged],
+  },
+  {
     path: 'edit/users',
     component: UserAdminComponent,
+    canActivate: [Logged],
+  },
+  {
+    path: 'edit/aboutme',
+    component: AboutmesComponent,
     canActivate: [Logged],
   },
   {
@@ -84,8 +97,13 @@ export const routes: Routes = [
     canActivate: [Logged],
   },
   {
-    path: 'create',
+    path: 'create/user',
     component: CreateComponent,
+    canActivate: [Logged],
+  },
+  {
+    path: 'create/aboutme',
+    component: AboutmeComponent,
     canActivate: [Logged],
   },
   {

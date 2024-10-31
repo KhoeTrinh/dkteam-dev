@@ -15,7 +15,7 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
   isSpecialRoute: boolean = false;
-  isUser: boolean = false;
+  isUser: boolean = true;
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   userData: any = {
     id: 1,
