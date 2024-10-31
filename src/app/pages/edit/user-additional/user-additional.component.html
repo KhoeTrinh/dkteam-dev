@@ -25,7 +25,7 @@
             <div
               class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
             >
-              <img [ngSrc]="fileName && fileName !== 'No file chosen' || imgSrc5" alt="" width="30" height="30" />
+              <img [ngSrc]="fileName || imgSrc5" alt="" width="30" height="30" />
             </div>
             <label
               for="file-upload"
@@ -58,9 +58,9 @@
           <div class="">Or</div>
           <div
             class="font-medium {{ bgClass }} text-white px-3 py-2 rounded-md cursor-pointer"
-            routerLink=""
+            routerLink="/create/aboutme"
           >
-            Add your Aboutme
+            {{aboutme === null ? "Add your Aboutme" : "Edit your Profile"}}
           </div>
           }
         </div>

@@ -1,24 +1,32 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AboutmeService } from '../../../services/aboutme.service';
 
 @Component({
   selector: 'app-user-additional',
   standalone: true,
   imports: [NgOptimizedImage, RouterLink],
   templateUrl: './user-additional.component.html',
-  styleUrl: './user-additional.component.css'
+  styleUrl: './user-additional.component.css',
 })
-export class UserAdditionalComponent {
+export class UserAdditionalComponent implements OnInit {
   imgSrc: string = 'assets/png/logo-no-background.png';
   imgSrc2: string = 'assets/svg/arrow-narrow-right-svgrepo-com-black.svg';
   imgSrc3: string = 'assets/svg/profile-image-round-1326-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/pen-square-svgrepo-com.svg';
-  imgSrc5: string = 'assets/svg/user-svgrepo-com.svg'
-  imgSrc6: string = '../../../../assets/svg/arrow-to-top-right-svgrepo-com.svg'
+  imgSrc5: string = 'assets/svg/user-svgrepo-com.svg';
+  imgSrc6: string = '../../../../assets/svg/arrow-to-top-right-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
-  fileName: string | null = 'No file chosen';
-  pickSide: string | null = null
+  fileName: string = 'No file chosen';
+  pickSide: string | null = null;
+  aboutme: any = null
+
+  constructor(private aboutmeService: AboutmeService) {}
+
+  ngOnInit(): void {
+      this.aboutme = this.aboutmeService.getAboutme()
+  }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -28,7 +36,14 @@ export class UserAdditionalComponent {
   }
 
   switchPickSide(side: string | null) {
-    this.pickSide = side
+    this.pickSide = side;
+    if (this.pickSide === 'image') {
+      this.restoreFileName();
+    }
+  }
+
+  restoreFileName() {
+    this.fileName = 'No file chosen';
   }
 
   userData: any = {

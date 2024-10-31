@@ -5,6 +5,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { RoleService } from './services/role.service';
 import { UserService } from './services/user.service';
+import { AboutmeService } from './services/aboutme.service';
 
 @Component({
   selector: 'app-root',
@@ -21,12 +22,18 @@ export class AppComponent implements OnInit {
     id: 1,
     username: 'khoa',
     userImage: 'assets/svg/user-svgrepo-com.svg',
+    aboutme: {
+      // title: 'khoa',
+      // description: 'khoa is a great',
+      // image: 'assets/svg/user-svgrepo-com.svg',
+    },
   };
 
   constructor(
     private router: Router,
     private roleService: RoleService,
-    private userService: UserService
+    private userService: UserService,
+    private aboutmeService: AboutmeService
   ) {
     this.router.events
       .pipe(
@@ -45,6 +52,10 @@ export class AppComponent implements OnInit {
       this.role = { isDev: true, isAdmin: true };
     }
     this.roleService.setRole(this.role);
-    this.userService.setUser(this.isUser)
+    this.userService.setUser(this.isUser);
+    if (Object.keys(this.userData.aboutme).length === 0) {
+      this.userData.aboutme = null;
+    }
+    this.aboutmeService.setAboutme(this.userData.aboutme);
   }
 }
