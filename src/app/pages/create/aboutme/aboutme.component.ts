@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './aboutme.component.css'
 })
 export class AboutmeComponent {
+  bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
 
 }

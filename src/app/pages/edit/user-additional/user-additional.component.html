@@ -18,14 +18,19 @@
     <form class="h-[calc(100%-12rem)] relative">
       <div class="flex flex-col h-full">
         <div
-        class="flex flex-col items-center justify-center h-full space-y-10"
+          class="flex flex-col items-center justify-center h-full space-y-10"
         >
-        @if(pickSide === 'image') {
+          @if(pickSide === 'image') {
           <div class="flex items-center ml-2 space-x-3 -mt-20">
             <div
               class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
             >
-              <img [ngSrc]="fileName || imgSrc5" alt="" width="30" height="30" />
+              <img
+                [ngSrc]="fileName === 'No file chosen' ? imgSrc5 : fileName"
+                alt=""
+                width="30"
+                height="30"
+              />
             </div>
             <label
               for="file-upload"
@@ -42,11 +47,13 @@
               (change)="onFileSelected($event)"
             />
           </div>
-          <button type="button" class="{{bgClass}} font-bold text-white w-32 px-3 py-2 rounded-md">Submit</button>
-          } @else if (pickSide === 'aboutme') {
-            <a routerLink=""></a>
-          }
-          @else {
+          <button
+            type="button"
+            class="{{ bgClass }} font-bold text-white w-32 px-3 py-2 rounded-md"
+          >
+            Submit
+          </button>
+          } @else {
           <div
             class="font-medium {{
               bgClass
@@ -57,10 +64,14 @@
           </div>
           <div class="">Or</div>
           <div
-            class="font-medium {{ bgClass }} text-white px-3 py-2 rounded-md cursor-pointer"
-            routerLink="/create/aboutme"
+            class="font-medium {{
+              bgClass
+            }} text-white px-3 py-2 rounded-md cursor-pointer"
+            [routerLink]="
+              aboutme === null ? '/create/aboutme' : '/edit/aboutme'
+            "
           >
-            {{aboutme === null ? "Add your Aboutme" : "Edit your Profile"}}
+            {{ aboutme === null ? "Add your Aboutme" : "Edit your Profile" }}
           </div>
           }
         </div>

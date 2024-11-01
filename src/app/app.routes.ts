@@ -13,7 +13,7 @@ import { AdminComponent } from './pages/dashboard/admin/admin.component';
 import { UsersComponent } from './pages/dashboard/users/users.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { UserAdminComponent } from './pages/edit/user-admin/user-admin.component';
-import { CreateComponent } from './pages/create/user/create.component';
+import { CreateComponent } from './pages/create/product/create.component';
 import { NotLogged } from './guards/not-logged.guard';
 import { Logged } from './guards/logged.guard';
 import { UserAdditionalComponent } from './pages/edit/user-additional/user-additional.component';
@@ -97,7 +97,7 @@ export const routes: Routes = [
     canActivate: [Logged],
   },
   {
-    path: 'create/user',
+    path: 'create/product',
     component: CreateComponent,
     canActivate: [Logged],
   },
