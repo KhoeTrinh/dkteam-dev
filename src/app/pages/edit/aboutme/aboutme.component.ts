@@ -35,6 +35,7 @@ export class AboutmesComponent {
     if (file) {
       this.fileName = file.name;
     }
+    this.productForm.get('image')?.setValue(file.name);
   }
 
   onSubmit() {
