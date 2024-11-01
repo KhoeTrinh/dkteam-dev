@@ -68,6 +68,5 @@ export class CreateComponent {
       description: formValue.description,
       author: formValue.author?.map((id: string) => ({ id })),
     };
-    console.log(submitData);
   }
 }

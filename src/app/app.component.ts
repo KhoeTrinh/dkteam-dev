@@ -23,9 +23,9 @@ export class AppComponent implements OnInit {
     username: 'khoa',
     userImage: 'assets/svg/user-svgrepo-com.svg',
     aboutme: {
-      // title: 'khoa',
-      // description: 'khoa is a great',
-      // image: 'assets/svg/user-svgrepo-com.svg',
+      title: 'khoa',
+      description: 'khoa is a great',
+      image: 'assets/svg/user-svgrepo-com.svg',
     },
   };
 
