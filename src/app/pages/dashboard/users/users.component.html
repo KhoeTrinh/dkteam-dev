@@ -11,7 +11,7 @@
     </div>
     <div class="grid grid-cols-3 min-h-full">
       @for(user of userArray; track i; let i = $index) {
-      <div class="m-1 h-64 rounded-md border relative {{ bgClass2 }}">
+      <a routerLink="/aboutus/{{user.id}}" class="m-1 h-64 rounded-md border relative {{ bgClass2 }}">
         <div class="flex justify-center mt-4">
           <div class="rounded-full p-1 border">
             <img [ngSrc]="user.userImage" alt="" width="30" height="30" />
@@ -63,7 +63,7 @@
             "
           />
         </div>
-      </div>
+      </a>
       }
     </div>
   </div>
