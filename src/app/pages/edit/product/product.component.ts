@@ -7,7 +7,6 @@ interface ProductForm {
   link: FormControl<string | null>;
   title: FormControl<string | null>;
   description: FormControl<string | null>;
-  image: FormControl<string | null>;
   author: FormControl<string[] | null>;
 }
 
@@ -26,6 +25,8 @@ export class ProductEditComponent implements OnInit {
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   authorArray: Array<string> = [];
   fileName: string | null = 'No file chosen';
+  fileUrl: string = '';
+  selectedFile: File | null = null
   productId: string = '';
   productForm: FormGroup<ProductForm>;
   hoveredIndex: number | null = null;
@@ -37,13 +38,13 @@ export class ProductEditComponent implements OnInit {
       (au) => au.authorProd.id
     );
     this.fileName = this.productsDataById.image;
+    this.fileUrl = this.productsDataById.image;
     this.productForm = new FormGroup<ProductForm>({
       link: new FormControl<string | null>(this.productsDataById.link),
       title: new FormControl<string | null>(this.productsDataById.title),
       description: new FormControl<string | null>(
         this.productsDataById.description
       ),
-      image: new FormControl<string | null>(this.fileName),
       author: new FormControl<string[] | null>(this.authorArray),
     });
   }
@@ -54,9 +55,14 @@ export class ProductEditComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
+    if (this.fileUrl) {
+      URL.revokeObjectURL(this.fileUrl);
+      this.fileUrl = '';
+    }
     if (file) {
       this.fileName = file.name;
-      this.productForm.get('image')?.setValue(file.name);
+      this.fileUrl = URL.createObjectURL(file);
+      this.selectedFile = file
     }
   }
 
@@ -73,16 +79,16 @@ export class ProductEditComponent implements OnInit {
   onSubmit() {
     const formValue = this.productForm.value;
     let submitData;
-    if (formValue.image === this.productsDataById.image) {
+    if (this.selectedFile) {
+      const formData = new FormData()
+      formData.append('image', this.selectedFile, this.selectedFile.name)
       submitData = {
-        link: formValue.link,
-        title: formValue.title,
-        description: formValue.description,
-        author: formValue.author?.map((id: string) => ({ id })),
+        image: formData
       };
     } else {
       submitData = {
-        image: formValue.image,
+        title: formValue.title,
+        description: formValue.description,
       };
     }
   }

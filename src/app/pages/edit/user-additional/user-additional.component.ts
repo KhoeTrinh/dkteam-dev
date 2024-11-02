@@ -16,22 +16,32 @@ export class UserAdditionalComponent implements OnInit {
   imgSrc3: string = 'assets/svg/profile-image-round-1326-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/pen-square-svgrepo-com.svg';
   imgSrc5: string = 'assets/svg/user-svgrepo-com.svg';
-  imgSrc6: string = '../../../../assets/svg/arrow-to-top-right-svgrepo-com.svg';
+  imgSrc6: string = 'assets/svg/arrow-to-top-right-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   fileName: string = 'No file chosen';
+  selectedFile: File | null = null;
+  fileUrl: string = '';
   pickSide: string | null = null;
-  aboutme: any = null
+  aboutme: any = null;
 
   constructor(private aboutmeService: AboutmeService) {}
 
   ngOnInit(): void {
-      this.aboutme = this.aboutmeService.getAboutme()
+    this.aboutme = this.aboutmeService.getAboutme();
+    this.fileName = this.userData.userImage;
+    this.fileUrl = this.userData.userImage;
   }
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
+    if (this.fileUrl) {
+      URL.revokeObjectURL(this.fileUrl);
+      this.fileUrl = '';
+    }
     if (file) {
       this.fileName = file.name;
+      this.fileUrl = URL.createObjectURL(file);
+      this.selectedFile = file;
     }
   }
 
@@ -44,6 +54,18 @@ export class UserAdditionalComponent implements OnInit {
 
   restoreFileName() {
     this.fileName = 'No file chosen';
+  }
+
+  onSubmit() {
+    let submitData;
+    const formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+      submitData = {
+        image: formData,
+      };
+    }
+    console.log(submitData);
   }
 
   userData: any = {

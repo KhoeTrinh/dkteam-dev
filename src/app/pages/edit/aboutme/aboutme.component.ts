@@ -1,9 +1,8 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 interface ProductForm {
-  image: FormControl<string | null>;
   title: FormControl<string | null>;
   description: FormControl<string | null>;
 }
@@ -23,9 +22,8 @@ export class AboutmesComponent {
   fileUrl: string = ''
   productForm: FormGroup<ProductForm>;
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.productForm = new FormGroup<ProductForm>({
-      image: new FormControl<string | null>(this.aboutmeData.image),
       title: new FormControl<string | null>(this.aboutmeData.title),
       description: new FormControl<string | null>(this.aboutmeData.description),
     });
@@ -43,14 +41,13 @@ export class AboutmesComponent {
       this.fileName = file.name;
       this.fileUrl = URL.createObjectURL(file)
       this.selectedFile = file
-      this.productForm.get('image')?.setValue(file.name);
     }
   }
 
   onSubmit() {
     const formValue = this.productForm.value;
     let submitData;
-    if (formValue.image && this.selectedFile) {
+    if (this.selectedFile) {
       const formData = new FormData()
       formData.append('image', this.selectedFile, this.selectedFile.name)
       submitData = {

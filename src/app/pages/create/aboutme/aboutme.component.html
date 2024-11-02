@@ -5,7 +5,33 @@
       <div class="h-6 mt-2"></div>
     </div>
     <div class="text-lg font-medium mt-6">Aboutme Image:</div>
-    <div class="mt-2 ml-2 h-10 font-extralight">Update later after you done creating your aboutme</div>
+    <div class="flex items-center ml-2 space-x-3 mt-4">
+      <div
+        class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
+      >
+        <img
+          [ngSrc]="fileName === 'No file chosen' ? imgSrc : fileUrl"
+          alt=""
+          width="30"
+          height="30"
+        />
+
+      </div>
+      <label
+        for="file-upload"
+        class="cursor-pointer {{
+          bgClass
+        }} text-white font-bold px-4 py-2 rounded-md hover:bg-blue-600"
+      >
+        {{ fileName || "Choose a file" }}
+      </label>
+      <input
+        id="file-upload"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </div>
     <form class="space-y-2" [formGroup]="productForm">
       <div class="w-full flex justify-between mt-6 min-h-[235px]">
         <div class="w-[45%]">
