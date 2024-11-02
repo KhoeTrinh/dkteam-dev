@@ -11,7 +11,7 @@
           class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
         >
           <img
-            [ngSrc]="fileName === 'No file chosen' ? imgSrc : fileName"
+            [ngSrc]="fileName === 'No file chosen' ? imgSrc : fileUrl"
             alt=""
             width="30"
             height="30"
@@ -53,6 +53,7 @@
       <button
         type="button"
         class="w-full rounded-md text-white {{ bgClass }} h-10"
+        (click)="onSubmit()"
       >
         Submit
       </button>

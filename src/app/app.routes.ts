@@ -19,6 +19,7 @@ import { Logged } from './guards/logged.guard';
 import { UserAdditionalComponent } from './pages/edit/user-additional/user-additional.component';
 import { AboutmeComponent } from './pages/create/aboutme/aboutme.component';
 import { AboutmesComponent } from './pages/edit/aboutme/aboutme.component';
+import { AboutmessComponent } from './pages/aboutus/aboutme/aboutme.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'aboutus',
     component: AboutusComponent,
+  },
+  {
+    path: 'aboutus/:id',
+    component: AboutmessComponent
   },
   {
     path: 'contactus',
