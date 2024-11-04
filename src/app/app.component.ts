@@ -16,7 +16,7 @@ import { AboutmeService } from './services/aboutme.service';
 })
 export class AppComponent implements OnInit {
   isSpecialRoute: boolean = false;
-  isUser: boolean = true;
+  isUser: boolean = false;
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   userData: any = {
     id: 1,

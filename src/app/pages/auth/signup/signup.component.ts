@@ -5,11 +5,27 @@ import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
 import { UserService } from '../../../services/user.service';
 import { RoleService } from '../../../services/role.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service';
+import { HttpClientModule } from '@angular/common/http';
+
+interface ProductForm {
+  username: FormControl<string | null>;
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
+}
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [NgOptimizedImage, CapitailizeFirst, RouterLink],
+  imports: [
+    NgOptimizedImage,
+    CapitailizeFirst,
+    RouterLink,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
+  providers: [ApiService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
@@ -22,22 +38,34 @@ export class SignupComponent {
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   inputValues: Array<string> = ['username', 'email', 'password'];
   innerWidth: number = 0;
+  productForm: FormGroup<ProductForm>;
 
   constructor(
     private widthCheck: WidthCheckService,
-    private userService: UserService,
-    private roleService: RoleService,
-    private router: Router
+    // private userService: UserService,
+    // private roleService: RoleService,
+    // private router: Router,
+    private apiService: ApiService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
       this.innerWidth = this.widthCheck.innerWidth;
     });
+    this.productForm = new FormGroup<ProductForm>({
+      username: new FormControl<string | null>(null),
+      email: new FormControl<string | null>(null),
+      password: new FormControl<string | null>(null),
+    });
   }
 
-  signup() {
-    this.userService.setUser(true);
-    this.roleService.setRole({ isDev: true, isAdmin: true });
-    this.router.navigate(['']);
+  async signup() {
+    const formValue = this.productForm.value;
+    const submitData = {
+      username: formValue.username,
+      email: formValue.email,
+      password: formValue.password,
+    };
+    const res: any = await this.apiService.signup(submitData);
+    localStorage.setItem('authToken', JSON.stringify(res.token));
   }
 }
