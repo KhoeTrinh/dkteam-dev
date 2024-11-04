@@ -12,6 +12,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { WidthCheckService } from '../../services/width-check.service';
 import { UserService } from '../../services/user.service';
 import { RoleService } from '../../services/role.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -45,7 +46,8 @@ export class NavbarComponent implements DoCheck {
     private eRef: ElementRef,
     private userService: UserService,
     private roleService: RoleService,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
@@ -60,7 +62,7 @@ export class NavbarComponent implements DoCheck {
 
   ngDoCheck(): void {
     this.user = this.userService.getUser();
-    this.role = this.roleService.getRole()
+    this.role = this.roleService.getRole();
   }
 
   openMenu() {
@@ -79,10 +81,14 @@ export class NavbarComponent implements DoCheck {
     this.isMenuOpen2 = false;
   }
 
-  signout() {
-    this.userService.setUser(false);
-    this.roleService.setRole({ isDev: false, isAdmin: false });
-    this.router.navigate(['']);
+  async signout() {
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
+    if(token) {
+      await this.apiService.signout(token)
+      localStorage.removeItem('authToken');
+      this.apiService.checkToken()
+      this.router.navigate(['']);
+    }
     this.isMenuOpen2 = false;
     this.isMenuOpen = false;
   }

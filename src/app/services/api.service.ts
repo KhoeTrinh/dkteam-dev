@@ -18,22 +18,50 @@ export class ApiService {
   ) {}
 
   // Api
-  async check(token: string) {
-    const res = await lastValueFrom(
+  check(token: string) {
+    return lastValueFrom(
       this.http.get(`${this.apiUrl}/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
     );
-    return res;
   }
 
-  async signup(data: any) {
-    const res = await lastValueFrom(
-      this.http.post(`${this.apiUrl}/users/signup`, data)
+  signup(data: any) {
+    return lastValueFrom(this.http.post(`${this.apiUrl}/users/signup`, data));
+  }
+
+  signin(data: any) {
+    return lastValueFrom(this.http.post(`${this.apiUrl}/users/login`, data));
+  }
+
+  async signout(token: string) {
+    await lastValueFrom(
+      this.http.post(
+        `${this.apiUrl}/users/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
     );
-    return res;
+    this.roleService.setRole({ isDev: false, isAdmin: false });
+    this.userService.setUser(false);
+  }
+
+  async updateUser(data: any, token: string) {
+    const res = await this.checkToken()
+    console.log(res);
+    return lastValueFrom(
+      this.http.put(`${this.apiUrl}/users/${res.message.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
   }
 
   // Check
@@ -50,7 +78,6 @@ export class ApiService {
       isAdmin: res.message.isAdmin,
     });
     this.userService.setUser(true);
-    console.log(this.userService.getUser());
     this.aboutmeService.setAboutme(res.message.aboutme);
     return { status: true, message: res.message };
   }

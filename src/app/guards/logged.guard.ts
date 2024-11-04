@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
   CanActivate,
-  GuardResult,
-  MaybeAsync,
   Router,
-  RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { ApiService } from '../services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Logged implements CanActivate {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
-  canActivate(): boolean | UrlTree {
-    if (this.userService.getUser()) {
-      return true;
-    } else {
+  async canActivate(): Promise<boolean | UrlTree> {
+    const tokenCheckResult = await this.apiService.checkToken()
+    if (!tokenCheckResult.status) {
       return this.router.createUrlTree(['']);
+    } else {
+      return true;
     }
   }
 }

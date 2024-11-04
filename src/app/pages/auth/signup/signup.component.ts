@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
-// import { UserService } from '../../../services/user.service';
-// import { RoleService } from '../../../services/role.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 
@@ -40,8 +38,6 @@ export class SignupComponent {
 
   constructor(
     private widthCheck: WidthCheckService,
-    // private userService: UserService,
-    // private roleService: RoleService,
     private router: Router,
     private apiService: ApiService
   ) {

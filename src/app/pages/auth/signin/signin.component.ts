@@ -3,13 +3,23 @@ import { Component } from '@angular/core';
 import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
-import { UserService } from '../../../services/user.service';
-import { RoleService } from '../../../services/role.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service';
+
+interface ProductForm {
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
+}
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [NgOptimizedImage, CapitailizeFirst, RouterLink],
+  imports: [
+    NgOptimizedImage,
+    CapitailizeFirst,
+    RouterLink,
+    ReactiveFormsModule,
+  ],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.css',
 })
@@ -21,22 +31,32 @@ export class SigninComponent {
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
   inputValues: Array<string> = ['email', 'password'];
   innerWidth: number = 0;
+  productForm: FormGroup<ProductForm>;
 
   constructor(
     private widthCheck: WidthCheckService,
-    private userService: UserService,
-    private roleService: RoleService,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
       this.innerWidth = this.widthCheck.innerWidth;
     });
+    this.productForm = new FormGroup<ProductForm>({
+      email: new FormControl<string | null>(null),
+      password: new FormControl<string | null>(null),
+    });
   }
 
-  signin() {
-    this.userService.setUser(true);
-    this.roleService.setRole({ isDev: true, isAdmin: false });
-    this.router.navigate([''])
+  async signin() {
+    const formValue = this.productForm.value;
+    const submitData = {
+      email: formValue.email,
+      password: formValue.password,
+    };
+    const res: any = await this.apiService.signin(submitData);
+    localStorage.setItem('authToken', JSON.stringify(res.token));
+    this.apiService.checkToken();
+    this.router.navigate(['/']);
   }
 }

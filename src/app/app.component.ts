@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isUser: boolean = false;
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   userData: any = {};
+  isLoading: boolean = true;
   private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tokenCheckSubscription = interval(300000).subscribe(() => {
+    this.tokenCheckSubscription = interval(120000).subscribe(() => {
       this.checkTokens();
     });
     this.checkTokens();
@@ -58,5 +59,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.role = { isDev: false, isAdmin: false };
       this.userData = {};
     }
+    this.isLoading = false;
   }
 }
