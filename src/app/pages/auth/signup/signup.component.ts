@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
-import { UserService } from '../../../services/user.service';
-import { RoleService } from '../../../services/role.service';
+// import { UserService } from '../../../services/user.service';
+// import { RoleService } from '../../../services/role.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
-import { HttpClientModule } from '@angular/common/http';
 
 interface ProductForm {
   username: FormControl<string | null>;
@@ -23,7 +22,6 @@ interface ProductForm {
     CapitailizeFirst,
     RouterLink,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
   providers: [ApiService],
   templateUrl: './signup.component.html',
@@ -44,7 +42,7 @@ export class SignupComponent {
     private widthCheck: WidthCheckService,
     // private userService: UserService,
     // private roleService: RoleService,
-    // private router: Router,
+    private router: Router,
     private apiService: ApiService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
@@ -67,5 +65,7 @@ export class SignupComponent {
     };
     const res: any = await this.apiService.signup(submitData);
     localStorage.setItem('authToken', JSON.stringify(res.token));
+    this.apiService.checkToken()
+    this.router.navigate(['/']);
   }
 }

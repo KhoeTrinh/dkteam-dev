@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from './components/ts/navbar.component';
 import { FooterComponent } from './components/ts/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs';
-import { RoleService } from './services/role.service';
-import { UserService } from './services/user.service';
-import { AboutmeService } from './services/aboutme.service';
+import { filter, interval, Subscription } from 'rxjs';
+import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -14,26 +12,16 @@ import { AboutmeService } from './services/aboutme.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
   isUser: boolean = false;
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
-  userData: any = {
-    id: 1,
-    username: 'khoa',
-    userImage: 'assets/svg/user-svgrepo-com.svg',
-    aboutme: {
-      title: 'khoa',
-      description: 'khoa is a great',
-      image: 'assets/svg/user-svgrepo-com.svg',
-    },
-  };
+  userData: any = {};
+  private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
     private router: Router,
-    private roleService: RoleService,
-    private userService: UserService,
-    private aboutmeService: AboutmeService
+    private apiService: ApiService
   ) {
     this.router.events
       .pipe(
@@ -48,14 +36,27 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isUser) {
-      this.role = { isDev: true, isAdmin: true };
+    this.tokenCheckSubscription = interval(300000).subscribe(() => {
+      this.checkTokens();
+    });
+    this.checkTokens();
+  }
+  ngOnDestroy(): void {
+    if (this.tokenCheckSubscription) {
+      this.tokenCheckSubscription.unsubscribe();
     }
-    this.roleService.setRole(this.role);
-    this.userService.setUser(this.isUser);
-    if (Object.keys(this.userData.aboutme).length === 0) {
-      this.userData.aboutme = null;
+  }
+
+  async checkTokens() {
+    const res = await this.apiService.checkToken();
+    if (res.status === true) {
+      this.isUser = true;
+      this.userData = res.message;
+      this.role = { isDev: res.message.isDev, isAdmin: res.message.isAdmin };
+    } else {
+      this.isUser = false;
+      this.role = { isDev: false, isAdmin: false };
+      this.userData = {};
     }
-    this.aboutmeService.setAboutme(this.userData.aboutme);
   }
 }
