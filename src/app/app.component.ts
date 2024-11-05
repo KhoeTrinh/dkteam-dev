@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tokenCheckSubscription = interval(120000).subscribe(() => {
+    this.tokenCheckSubscription = interval(60000).subscribe(() => {
       this.checkTokens();
     });
     this.checkTokens();

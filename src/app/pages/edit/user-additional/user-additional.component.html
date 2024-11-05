@@ -26,7 +26,7 @@
               class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
             >
               <img
-                [ngSrc]="fileName === 'No file chosen' ? imgSrc5 : fileName"
+                [ngSrc]="fileName === 'No file chosen' ? imgSrc5 : fileUrl"
                 alt=""
                 width="30"
                 height="30"
@@ -67,9 +67,21 @@
           <div
             class="font-medium {{
               bgClass
-            }} text-white px-3 py-2 rounded-md cursor-pointer"
+            }} text-white px-3 py-2 rounded-md cursor-pointer {{
+              !isLoading
+                ? role.isDev
+                  ? ''
+                  : 'blur-[2px] !cursor-not-allowed '
+                : null
+            }}"
             [routerLink]="
-              aboutme === null ? '/create/aboutme' : '/edit/aboutme'
+              !isLoading
+                ? !role.isDev
+                  ? '/edit2'
+                  : aboutme === null
+                  ? '/create/aboutme'
+                  : '/edit/aboutme'
+                : null
             "
           >
             {{ aboutme === null ? "Add your Aboutme" : "Edit your Profile" }}

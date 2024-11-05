@@ -53,14 +53,45 @@ export class ApiService {
   }
 
   async updateUser(data: any, token: string) {
-    const res = await this.checkToken()
-    console.log(res);
+    const res = await this.checkToken();
     return lastValueFrom(
       this.http.put(`${this.apiUrl}/users/${res.message.id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+    );
+  }
+
+  getImage(path: string): Promise<Blob> {
+    console.log(path);
+    return lastValueFrom(
+      this.http.post(
+        `${this.apiUrl}/github-image/get`,
+        { path: path },
+        { responseType: 'blob' }
+      )
+    );
+  }
+
+  uploadImage(formdata: FormData) {
+    return lastValueFrom(
+      this.http.post(`${this.apiUrl}/github-image`, formdata)
+    );
+  }
+
+  async createAboutme(data: any, token: string) {
+    const res = await this.checkToken();
+    return lastValueFrom(
+      this.http.post(
+        `${this.apiUrl}/aboutme`,
+        { ...data, author: res.message.id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
     );
   }
 

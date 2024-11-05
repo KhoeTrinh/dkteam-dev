@@ -1,7 +1,8 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AboutmeService } from '../../../services/aboutme.service';
+import { ApiService } from '../../../services/api.service';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
   selector: 'app-user-additional',
@@ -23,26 +24,39 @@ export class UserAdditionalComponent implements OnInit {
   fileUrl: string = '';
   pickSide: string | null = null;
   aboutme: any = null;
+  id: string = '';
+  role: any
+  isLoading: boolean = false;
 
-  constructor(private aboutmeService: AboutmeService) {}
+  constructor(
+    private apiService: ApiService,
+    private roleService: RoleService
+  ) {}
 
-  ngOnInit(): void {
-    this.aboutme = this.aboutmeService.getAboutme();
-    this.fileName = this.userData.userImage;
-    this.fileUrl = this.userData.userImage;
+  async ngOnInit(): Promise<void> {
+    this.isLoading = true
+    const res = await this.apiService.checkToken();
+    this.role = this.roleService.getRole();
+    this.aboutme = res.message.aboutme;
+    this.fileName = res.message.userImage;
+    this.fileUrl = res.message.userImage;
+    this.id = res.message.id;
+    this.isLoading = false
   }
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
     if (this.fileUrl) {
       URL.revokeObjectURL(this.fileUrl);
       this.fileUrl = '';
     }
-    if (file) {
-      this.fileName = file.name;
-      this.fileUrl = URL.createObjectURL(file);
-      this.selectedFile = file;
+    const file: File = event.target.files[0];
+    if (!file) {
+      console.warn('No file selected.');
+      return;
     }
+    this.fileName = file.name;
+    this.fileUrl = URL.createObjectURL(file);
+    this.selectedFile = file;
   }
 
   switchPickSide(side: string | null) {
@@ -56,28 +70,16 @@ export class UserAdditionalComponent implements OnInit {
     this.fileName = 'No file chosen';
   }
 
-  onSubmit() {
-    let submitData;
-    const formData = new FormData();
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile, this.selectedFile.name);
-      submitData = {
-        image: formData,
-      };
+  async onSubmit() {
+    if (!this.selectedFile) {
+      return;
     }
-    console.log(submitData);
-  }
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('id', this.id);
+    formData.append('type', 'user');
 
-  userData: any = {
-    id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',
-    username: 'khoa',
-    email: 'khoa@example.com',
-    userImage: this.imgSrc2,
-    authorProd: [],
-    aboutme: {
-      title: 'khoa',
-      description: 'khoa is a great',
-      image: this.imgSrc2,
-    },
-  };
+    await this.apiService.uploadImage(formData);
+    return 'Ok';
+  }
 }

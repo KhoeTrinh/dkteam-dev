@@ -21,7 +21,7 @@ import { ApiService } from '../../services/api.service';
   templateUrl: '../html/navbar.component.html',
   styleUrl: '../css/navbar.component.css',
 })
-export class NavbarComponent implements DoCheck {
+export class NavbarComponent implements OnInit, DoCheck {
   imgSrc: string = 'assets/svg/logo-no-background.svg';
   imgSrc2: string = 'assets/svg/menu-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/logout-svgrepo-com.svg';
@@ -38,6 +38,8 @@ export class NavbarComponent implements DoCheck {
   isMenuOpen2: boolean = false;
   user: boolean = false;
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
+  userImageUrl: any;
+  isLoading: boolean = false;
 
   @Input() userData: any = '';
 
@@ -58,6 +60,21 @@ export class NavbarComponent implements DoCheck {
         this.isMenuOpen2 = false;
       }
     });
+  }
+
+  async ngOnInit(): Promise<void> {
+    this.isLoading = true;
+    this.userImageUrl = '';
+    try {
+      const res = await this.apiService.getImage(this.userData.userImage);
+      console.log(this.userData);
+      this.userImageUrl = URL.createObjectURL(res);
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      this.userImageUrl = 'path/to/placeholder/image.jpg';
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   ngDoCheck(): void {
@@ -83,10 +100,10 @@ export class NavbarComponent implements DoCheck {
 
   async signout() {
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
-    if(token) {
-      await this.apiService.signout(token)
+    if (token) {
+      await this.apiService.signout(token);
       localStorage.removeItem('authToken');
-      this.apiService.checkToken()
+      this.apiService.checkToken();
       this.router.navigate(['']);
     }
     this.isMenuOpen2 = false;
@@ -98,6 +115,12 @@ export class NavbarComponent implements DoCheck {
     const clickInside = this.eRef.nativeElement.contains(e.target);
     if (!clickInside && this.isMenuOpen2) {
       this.isMenuOpen2 = false;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.userImageUrl) {
+      URL.revokeObjectURL(this.userImageUrl);
     }
   }
 }
