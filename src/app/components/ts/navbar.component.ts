@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit, DoCheck {
     this.userImageUrl = '';
     try {
       const res = await this.apiService.getImage(this.userData.userImage);
-      console.log(this.userData);
       this.userImageUrl = URL.createObjectURL(res);
     } catch (error) {
       console.error('Error fetching image:', error);

@@ -79,7 +79,9 @@ export class UserAdditionalComponent implements OnInit {
     formData.append('id', this.id);
     formData.append('type', 'user');
 
-    await this.apiService.uploadImage(formData);
+    const res: any = await this.apiService.uploadImage(formData);
+    localStorage.setItem('authToken', JSON.stringify(res.token))
+    this.apiService.checkToken()
     return 'Ok';
   }
 }

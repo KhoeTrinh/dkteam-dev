@@ -64,7 +64,6 @@ export class ApiService {
   }
 
   getImage(path: string): Promise<Blob> {
-    console.log(path);
     return lastValueFrom(
       this.http.post(
         `${this.apiUrl}/github-image/get`,
