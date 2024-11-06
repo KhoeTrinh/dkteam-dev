@@ -4,6 +4,7 @@ import { FooterComponent } from './components/ts/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, interval, Subscription } from 'rxjs';
 import { ApiService } from './services/api.service';
+import { IsLoadingService } from './services/isLoadingService.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,15 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
+  isLoading: boolean;
   private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
     private router: Router,
     private apiService: ApiService,
+    private isLoadingService: IsLoadingService
   ) {
+    this.isLoading = this.isLoadingService.getIsLoading();
     this.router.events
       .pipe(
         filter(
@@ -37,6 +41,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.apiService.checkToken();
     });
     this.apiService.checkToken();
+    this.isLoadingService.isLoading$.subscribe(async (isLoading) => {
+      this.isLoading = isLoading;
+    });
   }
   ngOnDestroy(): void {
     if (this.tokenCheckSubscription) {

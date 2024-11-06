@@ -1,6 +1,8 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { IsLoadingService } from '../../services/isLoadingService.service';
 
 @Component({
   selector: 'app-product-element',
@@ -22,13 +24,30 @@ export class ProductElementComponent implements OnInit {
   commentOpen: boolean = false;
   authors: any = ''
   comments: any = ''
+  userImageUrl: string[] = []
 
   @Input() productData: any = ''
   @Output() commentOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  ngOnInit() {
-    this.authors = this.productData.author
-    this.comments = this.productData.comment
+  constructor(private apiService: ApiService, private isLoadingService: IsLoadingService) {}
+
+  async ngOnInit() {
+    this.isLoadingService.startLoading();
+    this.authors = this.productData.author;
+    this.comments = this.productData.comment;
+
+    if (Array.isArray(this.productData.author)) {
+      this.userImageUrl = this.productData.author.map(() => this.imgSrc5);
+      await Promise.all(
+        this.productData.author.map(async (author: any, index: number) => {
+          const imagePath = author.authorProd.userImagePath;
+          const blob = await this.apiService.getImage(imagePath);
+          this.userImageUrl[index] = URL.createObjectURL(blob);
+        })
+      );
+    }
+
+    this.isLoadingService.stopLoading();
   }
   commentClick(e: Event) {
     e.preventDefault();

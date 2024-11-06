@@ -1,6 +1,8 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service';
+import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 interface ProductForm {
   link: FormControl<string | null>;
@@ -24,7 +26,10 @@ export class CreateComponent {
   productForm: FormGroup<ProductForm>;
   hoveredIndex: number | null = null;
 
-  constructor() {
+  constructor(
+    private apiService: ApiService,
+    private isLoadingService: IsLoadingService
+  ) {
     this.productForm = new FormGroup<ProductForm>({
       link: new FormControl<string | null>(null),
       title: new FormControl<string | null>(null),
@@ -48,7 +53,7 @@ export class CreateComponent {
   DeleteAuthor(index: number) {
     this.authorArray.splice(index, 1);
     this.productForm.get('author')?.setValue(this.authorArray);
-    this.hoveredIndex = null
+    this.hoveredIndex = null;
   }
 
   OnHover(index: number | null) {
@@ -59,14 +64,17 @@ export class CreateComponent {
     this.hoveredIndex = index;
   }
 
-  onSubmit() {
+  async onSubmit() {
+    this.isLoadingService.startLoading()
     const formValue = this.productForm.value;
-    let submitData;
-    submitData = {
+    const submitData = {
       link: formValue.link,
       title: formValue.title,
       description: formValue.description,
       author: formValue.author?.map((id: string) => ({ id })),
     };
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
+    await this.apiService.createProduct(submitData, token);
+    this.isLoadingService.stopLoading()
   }
 }

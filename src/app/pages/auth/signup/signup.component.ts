@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { WidthCheckService } from '../../../services/width-check.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
+import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 interface ProductForm {
   username: FormControl<string | null>;
@@ -39,7 +40,8 @@ export class SignupComponent {
   constructor(
     private widthCheck: WidthCheckService,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private isLoadingService: IsLoadingService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
@@ -53,6 +55,7 @@ export class SignupComponent {
   }
 
   async signup() {
+    this.isLoadingService.startLoading()
     const formValue = this.productForm.value;
     const submitData = {
       username: formValue.username,
@@ -63,5 +66,6 @@ export class SignupComponent {
     localStorage.setItem('authToken', JSON.stringify(res.token));
     this.apiService.checkToken()
     this.router.navigate(['/']);
+    this.isLoadingService.stopLoading()
   }
 }

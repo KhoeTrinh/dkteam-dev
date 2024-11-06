@@ -68,23 +68,17 @@
             class="font-medium {{
               bgClass
             }} text-white px-3 py-2 rounded-md cursor-pointer {{
-              !isLoading
-                ? role.isDev
-                  ? ''
-                  : 'blur-[2px] !cursor-not-allowed '
-                : null
+              role.isDev ? '' : 'blur-[2px] !cursor-not-allowed '
             }}"
             [routerLink]="
-              !isLoading
-                ? !role.isDev
-                  ? '/edit2'
-                  : aboutme === null
-                  ? '/create/aboutme'
-                  : '/edit/aboutme'
-                : null
+              !role.isDev
+                ? '/edit2'
+                : aboutme === null
+                ? '/create/aboutme'
+                : '/edit/aboutme'
             "
           >
-            {{ aboutme === null ? "Add your Aboutme" : "Edit your Profile" }}
+            {{ aboutme === null ? "Add your Aboutme" : "Edit your Aboutme" }}
           </div>
           }
         </div>

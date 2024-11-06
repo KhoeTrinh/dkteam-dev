@@ -2,6 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
+import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 interface ProductForm {
   title: FormControl<string | null>;
@@ -23,7 +24,10 @@ export class AboutmeComponent {
   fileUrl: string = '';
   productForm: FormGroup<ProductForm>;
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private isLoadingService: IsLoadingService
+  ) {
     this.productForm = new FormGroup<ProductForm>({
       title: new FormControl<string | null>(null),
       description: new FormControl<string | null>(null),
@@ -44,6 +48,7 @@ export class AboutmeComponent {
   }
 
   async onSubmit() {
+    this.isLoadingService.startLoading()
     const formValue = this.productForm.value;
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     const submitData = {
@@ -60,6 +65,7 @@ export class AboutmeComponent {
     formData.append('type', 'aboutme');
 
     await this.apiService.uploadImage(formData);
+    this.isLoadingService.stopLoading()
     return 'Ok';
   }
 }

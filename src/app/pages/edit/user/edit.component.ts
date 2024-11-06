@@ -4,6 +4,7 @@ import { CapitailizeFirst } from '../../../utils/pipes/CapitalFirst.pipe';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
+import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 interface Form {
   username: FormControl<string | null>;
@@ -43,7 +44,11 @@ export class EditComponent implements OnInit {
   currentIndex: number = 0;
   form: FormGroup<Form>;
 
-  constructor(private apiService: ApiService, private router: Router) {
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private isLoadingService: IsLoadingService
+  ) {
     this.form = new FormGroup<Form>({
       username: new FormControl<string | null>(null),
       email: new FormControl<string | null>(null),
@@ -77,6 +82,7 @@ export class EditComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.isLoadingService.startLoading()
     const formValue = this.form.value;
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     const submitData = {
@@ -90,6 +96,6 @@ export class EditComponent implements OnInit {
     localStorage.setItem('authToken', JSON.stringify(res.token));
     this.currentIndex = 0;
     this.router.navigate(['/']);
+    this.isLoadingService.stopLoading()
   }
-
 }

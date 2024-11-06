@@ -96,6 +96,26 @@ export class ApiService {
     );
   }
 
+  createProduct(data: any, token: string) {
+    return lastValueFrom(
+      this.http.post(`${this.apiUrl}/products`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
+  getProducts(token: string) {
+    return lastValueFrom(
+      this.http.get(`${this.apiUrl}/products`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
   // Check
   async checkToken() {
     let token = localStorage.getItem('authToken') || '';
@@ -109,9 +129,8 @@ export class ApiService {
       isDev: res.message.isDev,
       isAdmin: res.message.isAdmin,
     });
-    console.log(res.message);
     this.userService.setUser(true);
-    this.userDataService.setData(res.message)
+    this.userDataService.setData(res.message);
     this.aboutmeService.setAboutme(res.message.aboutme);
     return { status: true, message: res.message };
   }
