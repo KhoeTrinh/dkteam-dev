@@ -1,8 +1,4 @@
-@if(isLoading) {
-<div>Loading...</div>
-} @else {
-<app-navbar [userData]="userData"></app-navbar>
-}
+<app-navbar></app-navbar>
 
 <div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal'">
   <router-outlet></router-outlet>

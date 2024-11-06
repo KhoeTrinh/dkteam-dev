@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { RoleService } from './role.service';
 import { UserService } from './user.service';
 import { AboutmeService } from './aboutme.service';
+import { UserDataService } from './userData.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,8 @@ export class ApiService {
     private http: HttpClient,
     private roleService: RoleService,
     private userService: UserService,
-    private aboutmeService: AboutmeService
+    private aboutmeService: AboutmeService,
+    private userDataService: UserDataService
   ) {}
 
   // Api
@@ -107,7 +109,9 @@ export class ApiService {
       isDev: res.message.isDev,
       isAdmin: res.message.isAdmin,
     });
+    console.log(res.message);
     this.userService.setUser(true);
+    this.userDataService.setData(res.message)
     this.aboutmeService.setAboutme(res.message.aboutme);
     return { status: true, message: res.message };
   }

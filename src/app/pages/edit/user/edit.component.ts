@@ -89,7 +89,6 @@ export class EditComponent implements OnInit {
     const res: any = await this.apiService.updateUser(submitData, token);
     localStorage.setItem('authToken', JSON.stringify(res.token));
     this.currentIndex = 0;
-    this.apiService.checkToken();
     this.router.navigate(['/']);
   }
 

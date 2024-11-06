@@ -13,6 +13,7 @@ import { WidthCheckService } from '../../services/width-check.service';
 import { UserService } from '../../services/user.service';
 import { RoleService } from '../../services/role.service';
 import { ApiService } from '../../services/api.service';
+import { UserDataService } from '../../services/userData.service';
 
 @Component({
   selector: 'app-navbar',
@@ -40,14 +41,14 @@ export class NavbarComponent implements OnInit, DoCheck {
   role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
   userImageUrl: any;
   isLoading: boolean = false;
-
-  @Input() userData: any = '';
+  userData: any = {};
 
   constructor(
     private widthCheck: WidthCheckService,
     private eRef: ElementRef,
     private userService: UserService,
     private roleService: RoleService,
+    private userDataService: UserDataService,
     private router: Router,
     private apiService: ApiService
   ) {
@@ -62,18 +63,16 @@ export class NavbarComponent implements OnInit, DoCheck {
     });
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.isLoading = true;
-    this.userImageUrl = '';
-    try {
-      const res = await this.apiService.getImage(this.userData.userImage);
-      this.userImageUrl = URL.createObjectURL(res);
-    } catch (error) {
-      console.error('Error fetching image:', error);
-      this.userImageUrl = 'path/to/placeholder/image.jpg';
-    } finally {
-      this.isLoading = false;
-    }
+    this.userDataService.user$.subscribe(async (userData) => {
+      if (userData && Object.keys(userData).length) {
+        this.userData = userData;
+        this.userImageUrl = '';
+        const res = await this.apiService.getImage(this.userData.userImage);
+        this.userImageUrl = URL.createObjectURL(res);
+      }
+    });
   }
 
   ngDoCheck(): void {

@@ -14,15 +14,11 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
-  isUser: boolean = false;
-  role: { isDev: boolean; isAdmin: boolean } = { isDev: false, isAdmin: false };
-  userData: any = {};
-  isLoading: boolean = true;
   private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) {
     this.router.events
       .pipe(
@@ -38,27 +34,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tokenCheckSubscription = interval(60000).subscribe(() => {
-      this.checkTokens();
+      this.apiService.checkToken();
     });
-    this.checkTokens();
+    this.apiService.checkToken();
   }
   ngOnDestroy(): void {
     if (this.tokenCheckSubscription) {
       this.tokenCheckSubscription.unsubscribe();
     }
-  }
-
-  async checkTokens() {
-    const res = await this.apiService.checkToken();
-    if (res.status === true) {
-      this.isUser = true;
-      this.userData = res.message;
-      this.role = { isDev: res.message.isDev, isAdmin: res.message.isAdmin };
-    } else {
-      this.isUser = false;
-      this.role = { isDev: false, isAdmin: false };
-      this.userData = {};
-    }
-    this.isLoading = false;
   }
 }
