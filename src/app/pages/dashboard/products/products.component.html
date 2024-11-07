@@ -28,6 +28,8 @@
           class="border rounded-md p-1.5 transition-all duration-300 ease-in-out h-[40px] {{
             isExpanded ? 'w-auto ml-[42px]' : 'w-[40px]'
           }}"
+          #input
+          (keydown.enter)="Search(input.value)"
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProductElementComponent } from '../../../components/ts/product-element.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RoleService } from '../../../services/role.service';
 import { ApiService } from '../../../services/api.service';
 import { IsLoadingService } from '../../../services/isLoadingService.service';
@@ -28,7 +28,8 @@ export class ProductsComponent implements OnInit {
   constructor(
     private roleService: RoleService,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
+    private isLoadingService: IsLoadingService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -47,5 +48,9 @@ export class ProductsComponent implements OnInit {
 
   handleCommentOpen(commentOpen: boolean, i: number) {
     this.commentOpen[i] = commentOpen;
+  }
+
+  Search(value: string) {
+    this.router.navigate([`products/${value}`])
   }
 }

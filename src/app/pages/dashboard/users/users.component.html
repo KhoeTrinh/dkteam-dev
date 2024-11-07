@@ -11,10 +11,19 @@
     </div>
     <div class="grid grid-cols-3 min-h-full">
       @for(user of userArray; track i; let i = $index) {
-      <a routerLink="/aboutus/{{user.id}}" class="m-1 h-64 rounded-md border relative {{ bgClass2 }}">
+      <a
+        routerLink="/aboutus/{{ user.id }}"
+        class="m-1 h-64 rounded-md border relative {{ bgClass2 }}"
+      >
         <div class="flex justify-center mt-4">
           <div class="rounded-full p-1 border">
-            <img [ngSrc]="user.userImage" alt="" width="30" height="30" />
+            <img
+              [ngSrc]="userImageUrl[i]"
+              alt=""
+              width="30"
+              height="30"
+              class="rounded-full"
+            />
           </div>
         </div>
         <div class="text-xs mx-1 mt-2 min-h-8 text-center">
@@ -35,12 +44,12 @@
             class="absolute top-3/4 -translate-y-[60%] left-0 translate-x-1/2 {{
               currentIndices[i] > 0 ? '' : 'opacity-0'
             }} "
-            (click)="currentIndices[i] > 0 && moveSlider(i, -1)"
+            (click)="currentIndices[i] > 0 && moveSlider(i, -1, $event)"
           />
           <div class="flex max-w-[100px]" [id]="'slider-' + i">
-            @for(product of user.authorProd; track product.author.id) {
+            @for(product of user.authorProd; track i; let i = $index) {
             <img
-              [ngSrc]="product.author.productImage"
+              [ngSrc]="product.author.productImagePath"
               alt=""
               width="100"
               height="100"
@@ -59,7 +68,8 @@
               currentIndices[i] < author[i].length - 1 ? '' : 'opacity-0'
             }} "
             (click)="
-              currentIndices[i] < author[i].length - 1 && moveSlider(i, 1)
+              currentIndices[i] < author[i].length - 1 &&
+                moveSlider(i, 1, $event)
             "
           />
         </div>

@@ -54,6 +54,16 @@ export class ApiService {
     this.userService.setUser(false);
   }
 
+  getAllUsers(token: string) {
+    return lastValueFrom(
+      this.http.get(`${this.apiUrl}/users/admin`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
   async updateUser(data: any, token: string) {
     const res = await this.checkToken();
     return lastValueFrom(

@@ -61,7 +61,7 @@ export class AboutmeComponent {
     }
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
-    formData.append('id', res.message.id);
+    formData.append('id', res.aboutme.message.id);
     formData.append('type', 'aboutme');
 
     await this.apiService.uploadImage(formData);
