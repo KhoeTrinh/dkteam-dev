@@ -4,6 +4,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { ProductElementComponent } from '../../components/ts/product-element.component';
 import { ApiService } from '../../services/api.service';
 import { IsLoadingService } from '../../services/isLoadingService.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -28,7 +29,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private widthCheck: WidthCheckService,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
+    private isLoadingService: IsLoadingService,
+    private router: Router
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
@@ -46,5 +48,9 @@ export class ProductComponent implements OnInit {
 
   toggleInputWidth() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  Search(value: string) {
+    this.router.navigate([`products/${value}`])
   }
 }

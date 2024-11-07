@@ -116,6 +116,16 @@ export class ApiService {
     );
   }
 
+  getProductById(token: string, id: string) {
+    return lastValueFrom(
+      this.http.get(`${this.apiUrl}/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
   // Check
   async checkToken() {
     let token = localStorage.getItem('authToken') || '';

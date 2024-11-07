@@ -65,7 +65,7 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    this.isLoadingService.startLoading()
+    this.isLoadingService.startBlobLoading()
     this.userDataService.user$.subscribe(async (userData) => {
       if (userData && Object.keys(userData).length) {
         this.userData = userData;
@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit, DoCheck {
         this.userImageUrl = URL.createObjectURL(res);
       }
     });
-    this.isLoadingService.stopLoading()
+    this.isLoadingService.stopBlobLoading()
   }
 
   ngDoCheck(): void {

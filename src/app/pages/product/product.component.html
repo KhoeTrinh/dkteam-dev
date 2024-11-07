@@ -33,11 +33,13 @@
           (click)="toggleInputWidth()"
         />
         <input
+          #input
           type="text"
           placeholder="Enter product id or name"
           class="border rounded-md p-1.5 transition-all duration-300 ease-in-out h-[30px] {{
             isExpanded ? 'w-auto ml-[32px]' : 'w-[30px]'
           }}"
+          (keydown.enter)="Search(input.value)"
         />
       </div>
     </div>

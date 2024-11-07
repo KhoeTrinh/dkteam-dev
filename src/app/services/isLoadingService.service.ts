@@ -1,8 +1,9 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class IsLoadingService {
+  // Normal loading
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   private isLoadingCounter = 0;
   private minimumLoadingTime = 480;
@@ -40,5 +41,17 @@ export class IsLoadingService {
   }
   getIsLoading(): boolean {
     return this.isLoadingSubject.getValue();
+  }
+
+  // Image loading
+  private isBlobLoading = new BehaviorSubject<boolean>(false);
+  isBlobLoading$ = this.isBlobLoading.asObservable();
+
+  startBlobLoading() {
+    this.isBlobLoading.next(true);
+  }
+
+  stopBlobLoading() {
+    this.isBlobLoading.next(false);
   }
 }

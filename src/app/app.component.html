@@ -1,12 +1,11 @@
-@if(!isLoading) {
-  <app-navbar></app-navbar>
+@if(isLoading$ | async) {
+<div>Loading...</div>
+} @else {
+<app-navbar></app-navbar>
 
-  <div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal'">
-    <router-outlet></router-outlet>
-  </div>
+<div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal'">
+  <router-outlet></router-outlet>
+</div>
 
-  <app-footer></app-footer>
-}
-@else {
-  <div>Loading...</div>
+<app-footer></app-footer>
 }

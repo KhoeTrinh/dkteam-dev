@@ -2,20 +2,28 @@ import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from './components/ts/navbar.component';
 import { FooterComponent } from './components/ts/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { filter, interval, Subscription } from 'rxjs';
+import {
+  combineLatest,
+  filter,
+  interval,
+  Observable,
+  Subscription,
+} from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { ApiService } from './services/api.service';
 import { IsLoadingService } from './services/isLoadingService.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, RouterOutlet],
+  imports: [NavbarComponent, FooterComponent, RouterOutlet, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
-  isLoading: boolean;
+  isLoading$: Observable<boolean>;
   private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
@@ -23,7 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     private isLoadingService: IsLoadingService
   ) {
-    this.isLoading = this.isLoadingService.getIsLoading();
+    this.isLoading$ = combineLatest([
+      this.isLoadingService.isLoading$,
+      this.isLoadingService.isBlobLoading$,
+    ]).pipe(
+      map(([isLoading, isBlobLoading]) => isLoading || isBlobLoading),
+      debounceTime(1500)
+    );
     this.router.events
       .pipe(
         filter(
@@ -41,9 +55,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.apiService.checkToken();
     });
     this.apiService.checkToken();
-    this.isLoadingService.isLoading$.subscribe(async (isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
   ngOnDestroy(): void {
     if (this.tokenCheckSubscription) {
