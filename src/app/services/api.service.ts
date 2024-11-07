@@ -64,10 +64,30 @@ export class ApiService {
     );
   }
 
+  getUserById(token: string, id: string) {
+    return lastValueFrom(
+      this.http.get(`${this.apiUrl}/users/${id}/admin`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
   async updateUser(data: any, token: string) {
     const res = await this.checkToken();
     return lastValueFrom(
       this.http.put(`${this.apiUrl}/users/${res.message.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
+  updateUserAdmin(data: any, token: string, id: string) {
+    return lastValueFrom(
+      this.http.put(`${this.apiUrl}/users/${id}/admin`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

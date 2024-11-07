@@ -14,13 +14,14 @@
             width="30"
             height="30"
             class="{{ bgClass }} absolute rounded-md p-1"
-            (click)="addUser()"
+            (click)="addUser(input)"
           />
           <input
             #input
             type="text"
             placeholder="Enter user #id to change"
             class="border rounded-md p-1.5 transition-all duration-300 ease-in-out h-[30px] w-auto ml-[34px]"
+            (keydown.enter)="addUser(input)"
           />
         </div>
       </div>
@@ -28,6 +29,7 @@
         <button
           type="button"
           class="rounded-md {{ bgClass }} text-white px-2 text-xs"
+          (click)="onSubmit()"
         >
           Submit
         </button>
@@ -36,13 +38,15 @@
         </button>
       </div>
     </div>
-    <div
+    <form
       class="mx-10 mt-4 h-[calc(100%-10rem)] {{ bgClass2 }} border rounded-md"
+      [formGroup]="dynamicForm"
     >
       <div class="p-1">
-        @for(user of userArray; track user.id) {
+        @for(user of userArray; track i; let i = $index) {
         <div
           class="w-full bg-white h-10 rounded-md flex items-center justify-between px-3 text-xs font-medium space-x-2"
+          [formGroupName]="user.id"
         >
           <div class="flex items-center space-x-1">
             <div class="font-bold">#id:</div>
@@ -55,23 +59,49 @@
             <input
               placeholder="Enter usename"
               type="text"
-              [value]="user.username"
+              formControlName="username"
               class="max-w-10 p-1 border rounded-sm"
             />
           </div>
           <div class="flex items-center space-x-1">
             <div>Developer:</div>
-            <div class="w-6 h-6 border rounded-md" (click)="toggleDev(user)">
+            <div class="w-6 h-6 border rounded-md">
+              <input
+                placeholder="_"
+                type="checkbox"
+                class="w-6 h-6 absolute opacity-0"
+                (change)="toggleDev(user)"
+                [checked]="user.isDev"
+              />
               @if(user.isDev) {
-              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" class="select-none" />
+              <img
+                [ngSrc]="imgSrc6"
+                alt=""
+                width="30"
+                height="30"
+                class="select-none"
+              />
               }
             </div>
           </div>
           <div class="flex items-center space-x-1">
             <div>Admin:</div>
-            <div class="w-6 h-6 border rounded-md" (click)="toggleAdmin(user)">
+            <div class="w-6 h-6 border rounded-md">
+              <input
+                placeholder="_"
+                type="checkbox"
+                class="w-6 h-6 absolute opacity-0"
+                (change)="toggleAdmin(user)"
+                [checked]="user.isAdmin"
+              />
               @if(user.isAdmin) {
-              <img [ngSrc]="imgSrc6" alt="" width="30" height="30" class="select-none"/>
+              <img
+                [ngSrc]="imgSrc6"
+                alt=""
+                width="30"
+                height="30"
+                class="select-none"
+              />
               }
             </div>
           </div>
@@ -81,12 +111,18 @@
               class="w-6 h-6 rounded-md p-px border {{ getBgClass(user) }}"
               (click)="resetUserImage(user)"
             >
-              <img [ngSrc]="imgSrc7" alt="" width="30" height="30" class="select-none" />
+              <img
+                [ngSrc]="imgSrc7"
+                alt=""
+                width="30"
+                height="30"
+                class="select-none"
+              />
             </div>
           </div>
         </div>
         }
       </div>
-    </div>
+    </form>
   </div>
 </div>
