@@ -1,7 +1,7 @@
 <div class="w-auto mx-10 mt-7">
   <div class="w-full product-bg p-5 rounded-md">
     <a
-      href="{{productData.link}}"
+      [href]="productData.link"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -14,7 +14,7 @@
           <div
             class="w-16 h-16 rounded-full bg-white flex justify-center items-center absolute top-1 left-1 z-50"
           >
-            <img [ngSrc]="imgSrc4" alt="" width="40" height="40" />
+            <img [ngSrc]="productImageUrl" alt="" width="40" height="40" class="rounded-md" />
           </div>
         </div>
         <div class="flex flex-col items-center space-y-2 mb-2">

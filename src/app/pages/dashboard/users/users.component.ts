@@ -4,11 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { IsLoadingService } from '../../../services/isLoadingService.service';
+import { UserElementComponent } from '../../../components/ts/user-element.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NgOptimizedImage, RouterLink],
+  imports: [NgOptimizedImage, RouterLink, UserElementComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
 })
@@ -17,16 +18,13 @@ export class UsersComponent implements OnInit {
   imgSrc2: string = 'assets/svg/user-svgrepo-com.svg';
   imgSrc3: string = 'assets/svg/pen-square-svgrepo-com-white.svg';
   imgSrc4: string = 'assets/png/logo-color.png';
-  imgSrc5: string = 'assets/svg/arrow-prev-small-svgrepo-com.svg';
-  imgSrc6: string = 'assets/svg/arrow-next-small-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
-  bgClass2: string =
-    'bg-[conic-gradient(at_bottom_right,_var(--tw-gradient-stops))] from-slate-300 via-rose-50 to-teal-50';
   author: any;
   currentIndices: number[] = [];
   userArray: any = [];
   userImagePath: any = [];
   userImageUrl: any = [];
+  productImageUrl: any = {}
   constructor(
     private apiService: ApiService,
     private isLoadingService: IsLoadingService
@@ -58,16 +56,7 @@ export class UsersComponent implements OnInit {
     this.isLoadingService.stopLoading();
   }
 
-  moveSlider(i: number, direction: number, e: Event) {
-    e.preventDefault();
-    e.stopPropagation();
-    const numberOfProduct = this.author[i].length;
-    this.currentIndices[i] =
-      (this.currentIndices[i] + direction + numberOfProduct) % numberOfProduct;
-    const translateXValue = `translateX(-${100 * this.currentIndices[i]}%)`;
-    const slider = document.getElementById(`slider-${i}`);
-    if (slider) {
-      slider.style.transform = translateXValue;
-    }
+  handleIndexChange(e: number, i: number) {
+    this.currentIndices[i] = e
   }
 }

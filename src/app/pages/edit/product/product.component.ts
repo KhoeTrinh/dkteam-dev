@@ -24,7 +24,7 @@ export class ProductEditComponent implements OnInit {
   imgSrc3: string = 'assets/svg/plus-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/trash-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
-  authorArray: string[] = [];
+  authorArray: {id: string}[] = [];
   fileName: string | null = 'No file chosen';
   fileUrl: string = '';
   selectedFile: File | null = null;
@@ -53,7 +53,7 @@ export class ProductEditComponent implements OnInit {
     );
     this.productsDataById = res.message;
     this.authorArray = this.productsDataById.author.map(
-      (au: { authorProd: { id: any } }) => au.authorProd.id
+      (au: { authorProd: { id: any } }) => ({id: au.authorProd.id})
     );
 
     this.fileName = this.productsDataById.imagePath;
@@ -72,8 +72,7 @@ export class ProductEditComponent implements OnInit {
     this.productForm
       .get('description')
       ?.setValue(this.productsDataById.description);
-    const transformAuthors = this.authorArray.map((id) => ({ id }));
-    this.productForm.get('author')?.setValue(transformAuthors);
+    this.productForm.get('author')?.setValue(this.authorArray);
   }
 
   onFileSelected(event: any) {
@@ -92,9 +91,8 @@ export class ProductEditComponent implements OnInit {
   addAuthor(a: HTMLInputElement) {
     const author = a.value.trim();
     if (author) {
-      this.authorArray.push(author);
-      const transformAuthors = this.authorArray.map((id) => ({ id }));
-      this.productForm.get('author')?.setValue(transformAuthors);
+      this.authorArray.push({id: author});
+      this.productForm.get('author')?.setValue(this.authorArray);
       a.value = '';
       this.authorInput.nativeElement.focus();
     }
@@ -103,8 +101,7 @@ export class ProductEditComponent implements OnInit {
   async onSubmit() {
     const formValue = this.productForm.value;
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
-    const transformAuthors = this.authorArray.map((id) => ({ id }));
-    formValue.author = transformAuthors;
+    await this.apiService.updateProduct(token, this.productsDataById.id, formValue);
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -112,7 +109,6 @@ export class ProductEditComponent implements OnInit {
       formData.append('type', 'product');
       await this.apiService.uploadImage(formData)
     }
-    this.apiService.updateProduct(token, this.productsDataById.id, formValue);
   }
 
   OnHover(index: number | null) {
@@ -125,7 +121,6 @@ export class ProductEditComponent implements OnInit {
 
   DeleteAuthor(index: number) {
     this.authorArray.splice(index, 1);
-    const transformAuthors = this.authorArray.map((id) => ({ id }));
-    this.productForm.get('author')?.setValue(transformAuthors);
+    this.productForm.get('author')?.setValue(this.authorArray);
   }
 }

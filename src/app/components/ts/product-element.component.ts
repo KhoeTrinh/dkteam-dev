@@ -24,6 +24,7 @@ export class ProductElementComponent implements OnInit {
   commentOpen: boolean = false;
   authors: any = '';
   comments: any = '';
+  productImageUrl: string = ''
   userImageUrl: string[] = [];
 
   @Input() productData: any = '';
@@ -39,7 +40,14 @@ export class ProductElementComponent implements OnInit {
     this.isLoadingService.startBlobLoading();
     this.authors = this.productData.author;
     this.comments = this.productData.comment;
-
+    if(this.productData.imagePath === 'assets/svg/gear-10-svgrepo-com.svg') {
+      this.productImageUrl = this.productData.imagePath;
+    } else {
+      const imageBlob = await this.apiService.getImage(
+        this.productData.imagePath
+      );
+      this.productImageUrl = URL.createObjectURL(imageBlob);
+    }
     if (Array.isArray(this.productData.author)) {
       this.userImageUrl = this.productData.author.map(() => this.imgSrc5);
       await Promise.all(
