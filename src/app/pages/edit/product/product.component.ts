@@ -2,12 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgOptimizedImage } from '@angular/common';
+import { ApiService } from '../../../services/api.service';
 
 interface ProductForm {
   link: FormControl<string | null>;
   title: FormControl<string | null>;
   description: FormControl<string | null>;
-  author: FormControl<string[] | null>;
+  author: FormControl<{ id: string }[] | null>;
 }
 
 @Component({
@@ -23,34 +24,56 @@ export class ProductEditComponent implements OnInit {
   imgSrc3: string = 'assets/svg/plus-svgrepo-com.svg';
   imgSrc4: string = 'assets/svg/trash-svgrepo-com.svg';
   bgClass: string = 'bg-gradient-to-r from-slate-900 to-slate-700';
-  authorArray: Array<string> = [];
+  authorArray: string[] = [];
   fileName: string | null = 'No file chosen';
   fileUrl: string = '';
-  selectedFile: File | null = null
+  selectedFile: File | null = null;
   productId: string = '';
   productForm: FormGroup<ProductForm>;
+  productsDataById: any = {};
   hoveredIndex: number | null = null;
 
   @ViewChild('a') authorInput!: ElementRef;
 
-  constructor(private route: ActivatedRoute) {
-    this.authorArray = this.productsDataById.author.map(
-      (au) => au.authorProd.id
-    );
-    this.fileName = this.productsDataById.image;
-    this.fileUrl = this.productsDataById.image;
+  constructor(private route: ActivatedRoute, private apiService: ApiService) {
     this.productForm = new FormGroup<ProductForm>({
-      link: new FormControl<string | null>(this.productsDataById.link),
-      title: new FormControl<string | null>(this.productsDataById.title),
-      description: new FormControl<string | null>(
-        this.productsDataById.description
-      ),
-      author: new FormControl<string[] | null>(this.authorArray),
+      link: new FormControl<string | null>(null),
+      title: new FormControl<string | null>(null),
+      description: new FormControl<string | null>(null),
+      author: new FormControl<{ id: string }[] | null>(null),
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.productId = this.route.snapshot.paramMap.get('id')!;
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
+    const res: any = await this.apiService.getProductById(
+      token,
+      this.productId
+    );
+    this.productsDataById = res.message;
+    this.authorArray = this.productsDataById.author.map(
+      (au: { authorProd: { id: any } }) => au.authorProd.id
+    );
+
+    this.fileName = this.productsDataById.imagePath;
+    if (
+      this.productsDataById.imagePath === 'assets/svg/gear-10-svgrepo-com.svg'
+    ) {
+      this.fileUrl = this.productsDataById.imagePath;
+    } else {
+      const imageBlob = await this.apiService.getImage(
+        this.productsDataById.imagePath
+      );
+      this.fileUrl = URL.createObjectURL(imageBlob);
+    }
+    this.productForm.get('link')?.setValue(this.productsDataById.link);
+    this.productForm.get('title')?.setValue(this.productsDataById.title);
+    this.productForm
+      .get('description')
+      ?.setValue(this.productsDataById.description);
+    const transformAuthors = this.authorArray.map((id) => ({ id }));
+    this.productForm.get('author')?.setValue(transformAuthors);
   }
 
   onFileSelected(event: any) {
@@ -62,7 +85,7 @@ export class ProductEditComponent implements OnInit {
     if (file) {
       this.fileName = file.name;
       this.fileUrl = URL.createObjectURL(file);
-      this.selectedFile = file
+      this.selectedFile = file;
     }
   }
 
@@ -70,27 +93,26 @@ export class ProductEditComponent implements OnInit {
     const author = a.value.trim();
     if (author) {
       this.authorArray.push(author);
-      this.productForm.get('author')?.setValue(this.authorArray);
+      const transformAuthors = this.authorArray.map((id) => ({ id }));
+      this.productForm.get('author')?.setValue(transformAuthors);
       a.value = '';
       this.authorInput.nativeElement.focus();
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     const formValue = this.productForm.value;
-    let submitData;
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
+    const transformAuthors = this.authorArray.map((id) => ({ id }));
+    formValue.author = transformAuthors;
     if (this.selectedFile) {
-      const formData = new FormData()
-      formData.append('image', this.selectedFile, this.selectedFile.name)
-      submitData = {
-        image: formData
-      };
-    } else {
-      submitData = {
-        title: formValue.title,
-        description: formValue.description,
-      };
+      const formData = new FormData();
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+      formData.append('id', this.productsDataById.id);
+      formData.append('type', 'product');
+      await this.apiService.uploadImage(formData)
     }
+    this.apiService.updateProduct(token, this.productsDataById.id, formValue);
   }
 
   OnHover(index: number | null) {
@@ -103,63 +125,7 @@ export class ProductEditComponent implements OnInit {
 
   DeleteAuthor(index: number) {
     this.authorArray.splice(index, 1);
-    this.productForm.get('author')?.setValue(this.authorArray);
+    const transformAuthors = this.authorArray.map((id) => ({ id }));
+    this.productForm.get('author')?.setValue(transformAuthors);
   }
-
-  productsDataById = {
-    id: '0c548a0a-4914-42f8-a5d0-887ba5f70f',
-    link: 'https://www.youtube.com/watch?v=T9ABgBIYS1g',
-    title: 'File Sharing',
-    description: 'A product created primarily for file sharing',
-    publishDate: '2024-10-10T01:37:55.866Z',
-    image: this.imgSrc,
-    author: [
-      {
-        authorProd: {
-          userImage: this.imgSrc2,
-          username: 'Khoa',
-          id: '1',
-        },
-      },
-      {
-        authorProd: {
-          userImage: this.imgSrc2,
-          username: 'Khoa',
-          id: '2',
-        },
-      },
-      {
-        authorProd: {
-          userImage: this.imgSrc2,
-          username: 'Khoa',
-          id: '3',
-        },
-      },
-      {
-        authorProd: {
-          userImage: this.imgSrc2,
-          username: 'Khoa',
-          id: '4',
-        },
-      },
-    ],
-    comment: [
-      {
-        id: 'f5d9ee62-2174b65-b1f3-0f30f1be',
-        description: 'I love it',
-        author: {
-          username: 'Khoa',
-          userImage: this.imgSrc2,
-        },
-      },
-      {
-        id: 'f5d9ee62-217b65-b1f2840f30f1be',
-        description: 'I love it',
-        author: {
-          username: 'Khoa',
-          userImage: this.imgSrc2,
-        },
-      },
-    ],
-  };
 }

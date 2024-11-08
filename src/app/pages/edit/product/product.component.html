@@ -10,7 +10,7 @@
         <div
           class="h-[40px] w-[40px] rounded-md flex items-center justify-center border border-gray-500"
         >
-          <img [ngSrc]="fileName || imgSrc" alt="" width="30" height="30" />
+          <img [ngSrc]="fileUrl || imgSrc" alt="" width="30" height="30" />
         </div>
         <label
           for="file-upload"
@@ -75,7 +75,7 @@
           <div
             class="mt-2 ml-2 space-y-1 max-h-[114.4px] overflow-y-scroll rounded-md"
           >
-            @for(author of authorArray; track author; let i = $index) {
+            @for(author of authorArray; track i; let i = $index) {
             <div
               class="inline-block text-xs mr-1 px-2 py-1.5 rounded-md {{
                 bgClass
