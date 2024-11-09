@@ -1,6 +1,4 @@
-@if(isLoading$ | async) {
-<div>Loading...</div>
-} @else {
+
 <app-navbar></app-navbar>
 
 <div [class]="isSpecialRoute ? 'app-bg-special' : 'app-bg-normal'">
@@ -8,4 +6,3 @@
 </div>
 
 <app-footer></app-footer>
-}

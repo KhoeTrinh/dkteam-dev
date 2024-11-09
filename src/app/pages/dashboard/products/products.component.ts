@@ -4,7 +4,6 @@ import { ProductElementComponent } from '../../../components/ts/product-element.
 import { Router, RouterLink } from '@angular/router';
 import { RoleService } from '../../../services/role.service';
 import { ApiService } from '../../../services/api.service';
-import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 @Component({
   selector: 'app-products',
@@ -28,18 +27,15 @@ export class ProductsComponent implements OnInit {
   constructor(
     private roleService: RoleService,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService,
     private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.isLoadingService.startLoading();
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     const res: any = await this.apiService.getProducts(token);
     this.productArray = res.message;
     this.role = this.roleService.getRole();
     this.commentOpen = new Array(this.productArray.length).fill(false);
-    this.isLoadingService.stopLoading();
   }
 
   toggleInputWidth() {

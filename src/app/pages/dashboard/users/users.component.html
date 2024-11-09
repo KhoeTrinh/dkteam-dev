@@ -9,13 +9,15 @@
         <img [ngSrc]="imgSrc3" alt="" width="30" height="30" />
       </a>
     </div>
-    <div class="grid grid-cols-3 min-h-full">
+    <div class="flex flex-wrap">
       @for(user of userArray; track i; let i = $index) {
-      <app-user-element
-        [userData]="user"
-        [index]="currentIndices[i]"
-        (indexChanged)="handleIndexChange($event, i)"
-      ></app-user-element>
+        <div class="w-1/3 h-[266px]">
+          <app-user-element
+            [userData]="user"
+            [index]="currentIndices[i]"
+            (indexChanged)="handleIndexChange($event, i)"
+          ></app-user-element>
+        </div>
       }
     </div>
   </div>

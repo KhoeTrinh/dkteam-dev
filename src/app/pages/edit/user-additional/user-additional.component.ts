@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { RoleService } from '../../../services/role.service';
-import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 @Component({
   selector: 'app-user-additional',
@@ -31,18 +30,15 @@ export class UserAdditionalComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private roleService: RoleService,
-    private isLoadingService: IsLoadingService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.isLoadingService.startLoading()
     const res = await this.apiService.checkToken();
     this.role = this.roleService.getRole();
     this.aboutme = res.message.aboutme;
     this.fileName = res.message.userImage;
     this.fileUrl = res.message.userImage;
     this.id = res.message.id;
-    this.isLoadingService.stopLoading()
   }
 
   onFileSelected(event: any) {
@@ -72,7 +68,6 @@ export class UserAdditionalComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.isLoadingService.startLoading()
     if (!this.selectedFile) {
       return;
     }
@@ -84,7 +79,6 @@ export class UserAdditionalComponent implements OnInit {
     const res: any = await this.apiService.uploadImage(formData);
     localStorage.setItem('authToken', JSON.stringify(res.token))
     this.apiService.checkToken()
-    this.isLoadingService.stopLoading()
     return 'Ok';
   }
 }

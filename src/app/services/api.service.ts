@@ -166,6 +166,16 @@ export class ApiService {
     );
   }
 
+  createComment(token: string, data: any) {
+    return lastValueFrom(
+      this.http.post(`${this.apiUrl}/comments`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    )
+  }
+
   // Check
   async checkToken() {
     let token = localStorage.getItem('authToken') || '';

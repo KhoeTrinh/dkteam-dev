@@ -2,7 +2,6 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
-import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 interface ProductForm {
   link: FormControl<string | null>;
@@ -28,7 +27,6 @@ export class CreateComponent {
 
   constructor(
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
   ) {
     this.productForm = new FormGroup<ProductForm>({
       link: new FormControl<string | null>(null),
@@ -65,7 +63,6 @@ export class CreateComponent {
   }
 
   async onSubmit() {
-    this.isLoadingService.startLoading()
     const formValue = this.productForm.value;
     const submitData = {
       link: formValue.link,
@@ -75,6 +72,5 @@ export class CreateComponent {
     };
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     await this.apiService.createProduct(submitData, token);
-    this.isLoadingService.stopLoading()
   }
 }

@@ -3,7 +3,6 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
-import { IsLoadingService } from '../../../services/isLoadingService.service';
 import { UserElementComponent } from '../../../components/ts/user-element.component';
 
 @Component({
@@ -27,11 +26,9 @@ export class UsersComponent implements OnInit {
   productImageUrl: any = {}
   constructor(
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.isLoadingService.startLoading();
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     const res: any = await this.apiService.getAllUsers(token);
     this.userArray = res.message;
@@ -42,7 +39,6 @@ export class UsersComponent implements OnInit {
       (ip: { imagePath: string }) => ip.imagePath
     );
     if (Array.isArray(this.userImagePath)) {
-      this.isLoadingService.startBlobLoading();
       this.userImageUrl = this.userImagePath.map(() => this.imgSrc2);
       await Promise.all(
         this.userImagePath.map(async (image: any, index: number) => {
@@ -50,10 +46,8 @@ export class UsersComponent implements OnInit {
           this.userImageUrl[index] = URL.createObjectURL(blob);
         })
       ).catch(() => this.userImagePath.map(() => this.imgSrc2));
-      this.isLoadingService.stopBlobLoading();
     }
     this.currentIndices = Array(this.userArray.length).fill(0);
-    this.isLoadingService.stopLoading();
   }
 
   handleIndexChange(e: number, i: number) {

@@ -11,33 +11,23 @@ import {
 } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { ApiService } from './services/api.service';
-import { IsLoadingService } from './services/isLoadingService.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, RouterOutlet, AsyncPipe],
+  imports: [NavbarComponent, FooterComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
-  isLoading$: Observable<boolean>;
   private tokenCheckSubscription: Subscription | null = null;
 
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
   ) {
-    this.isLoading$ = combineLatest([
-      this.isLoadingService.isLoading$,
-      this.isLoadingService.isBlobLoading$,
-    ]).pipe(
-      map(([isLoading, isBlobLoading]) => isLoading || isBlobLoading),
-      debounceTime(1500)
-    );
     this.router.events
       .pipe(
         filter(

@@ -14,7 +14,6 @@ import { UserService } from '../../services/user.service';
 import { RoleService } from '../../services/role.service';
 import { ApiService } from '../../services/api.service';
 import { UserDataService } from '../../services/userData.service';
-import { IsLoadingService } from '../../services/isLoadingService.service';
 
 @Component({
   selector: 'app-navbar',
@@ -51,7 +50,6 @@ export class NavbarComponent implements OnInit, DoCheck {
     private userDataService: UserDataService,
     private router: Router,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
     window.addEventListener('resize', () => {
@@ -65,7 +63,6 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
-    this.isLoadingService.startBlobLoading()
     this.userDataService.user$.subscribe(async (userData) => {
       if (userData && Object.keys(userData).length) {
         this.userData = userData;
@@ -74,7 +71,6 @@ export class NavbarComponent implements OnInit, DoCheck {
         this.userImageUrl = URL.createObjectURL(res);
       }
     });
-    this.isLoadingService.stopBlobLoading()
   }
 
   ngDoCheck(): void {
@@ -99,7 +95,6 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   async signout() {
-    this.isLoadingService.startLoading()
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     if (token) {
       await this.apiService.signout(token);
@@ -107,7 +102,6 @@ export class NavbarComponent implements OnInit, DoCheck {
       this.apiService.checkToken();
       this.router.navigate(['']);
     }
-    this.isLoadingService.stopLoading()
     this.isMenuOpen2 = false;
     this.isMenuOpen = false;
   }

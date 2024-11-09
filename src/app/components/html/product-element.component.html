@@ -1,39 +1,41 @@
 <div class="w-auto mx-10 mt-7">
   <div class="w-full product-bg p-5 rounded-md">
-    <a
-      [href]="productData.link"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a [href]="productData.link" target="_blank" rel="noopener noreferrer">
       <div
         class="flex flex-col items-center w-auto mx-1 p-1 bg-slate-600 text-white rounded-md bg-opacity-50"
       >
-        <div
-          class="relative w-[4.5rem] h-[4.5rem] m-3 rounded-full bg-black"
-        >
+        <div class="relative w-[4.5rem] h-[4.5rem] m-3 rounded-full bg-black">
           <div
             class="w-16 h-16 rounded-full bg-white flex justify-center items-center absolute top-1 left-1 z-50"
           >
-            <img [ngSrc]="productImageUrl" alt="" width="40" height="40" class="rounded-md" />
+            <img
+              [ngSrc]="productImageUrl"
+              alt=""
+              width="40"
+              height="40"
+              class="rounded-md"
+            />
           </div>
         </div>
         <div class="flex flex-col items-center space-y-2 mb-2">
           <div class="text-2xl font-bold {{ tClass }} h-10">
-            {{productData.title}}
+            {{ productData.title }}
           </div>
           <div class="font-semibold {{ tClass }} h-10">
-            {{productData.description}}
+            {{ productData.description }}
           </div>
           <div class="flex items-center w-full justify-around">
-            <div class="text-xs">{{productData.publishDate | date}}</div>
+            <div class="text-xs">{{ productData.publishDate | date }}</div>
             <div class="flex -space-x-4">
               @for(author of authors; track i; let i = $index) {
-                <div
+              <div
                 class="flex justify-center items-center w-9 h-9 bg-white rounded-full"
               >
-                <div class="w-[1.75rem] h-[1.75rem] rounded-full overflow-hidden">
+                <div
+                  class="w-[1.75rem] h-[1.75rem] rounded-full overflow-hidden"
+                >
                   <img
-                    [ngSrc]="userImageUrl[i]"
+                    [ngSrc]="userImageUrlProd[i]"
                     alt=""
                     className="inline-block object-cover h-10 w-10 rounded-full"
                     width="30"
@@ -52,38 +54,70 @@
             >
               Comments
             </button>
-            <a routerLink="/products/{{productData.id}} " class="absolute -right-5 top-[22%] {{bgClass}} px-3 py-2 rounded-md">
-              <img [ngSrc]="imgSrc6" alt=""width="26" height="26">
+            <a
+              routerLink="/products/{{ productData.id }} "
+              class="absolute -right-5 top-[22%] {{
+                bgClass
+              }} px-3 py-2 rounded-md"
+            >
+              <img [ngSrc]="imgSrc6" alt="" width="26" height="26" />
             </a>
           </div>
           @if(commentOpen) {
           <div
             class="scrollbar w-full rounded-md bg-white text-black h-auto max-h-[15rem] p-4"
+            (click)="$event.preventDefault()"
           >
-            @for(comment of comments; track comment.id) {
-              <div class="flex items-center space-x-4 mb-8">
+            <div class="flex items-center space-x-4 mb-6 border p-2 rounded-md">
+              <div
+                class="flex justify-center items-center w-9 h-9 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+              >
                 <div
-                  class="flex justify-center items-center w-9 h-9 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+                  class="w-[1.75rem] h-[1.75rem] rounded-full bg-white overflow-hidden"
                 >
-                  <div class="w-[1.75rem] h-[1.75rem] rounded-full bg-white">
-                    <img
-                      ngSrc="{{comment.author.userImage}}"
-                      alt=""
-                      className="inline-block object-cover h-10 w-10 rounded-full ring-2 ring-slate-100"
-                      width="30"
-                      height="30"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="flex flex-col w-[16rem] rounded-lg text-white px-3 py-1 -mb-8 {{
-                    bgClass
-                  }}"
-                >
-                  <div class="font-bold ml-1">{{comment.author.username}}</div>
-                  <div class="text-sm">{{comment.description}}</div>
+                  <img
+                    [ngSrc]="userImageUrl"
+                    alt=""
+                    className="inline-block object-cover h-10 w-10 rounded-full ring-2 ring-slate-100"
+                    width="30"
+                    height="30"
+                  />
                 </div>
               </div>
+              <div class="font-bold ml-1">{{ userData.username }}</div>
+              <input
+                #description
+                placeholder="_"
+                class="text-sm !text-black !w-2/3 py-0.5 px-1"
+                (keydown.enter)="onSubmit(description)"
+              />
+            </div>
+            @for(comment of productData.comments; track i; let i =$index) {
+            <div class="flex items-center space-x-4 mb-8">
+              <div
+                class="flex justify-center items-center w-9 h-9 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+              >
+                <div class="w-[1.75rem] h-[1.75rem] rounded-full bg-white overflow-hidden">
+                  <img
+                    [ngSrc]="userImageUrlComment[i]"
+                    alt=""
+                    className="inline-block object-cover h-10 w-10 rounded-full ring-2 ring-slate-100"
+                    width="30"
+                    height="30"
+                  />
+                </div>
+              </div>
+              <div
+                class="flex flex-col w-[16rem] rounded-lg text-white px-3 py-1 -mb-8 {{
+                  bgClass
+                }}"
+              >
+                <div class="font-bold ml-1">{{ comment.author.username }}</div>
+                <div class="text-sm">{{ comment.description }}</div>
+              </div>
+            </div>
+            } @empty {
+            <div>Nothing here</div>
             }
           </div>
           }

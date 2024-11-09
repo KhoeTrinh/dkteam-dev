@@ -3,7 +3,6 @@ import { WidthCheckService } from '../../services/width-check.service';
 import { NgOptimizedImage } from '@angular/common';
 import { ProductElementComponent } from '../../components/ts/product-element.component';
 import { ApiService } from '../../services/api.service';
-import { IsLoadingService } from '../../services/isLoadingService.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +28,6 @@ export class ProductComponent implements OnInit {
   constructor(
     private widthCheck: WidthCheckService,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService,
     private router: Router
   ) {
     this.innerWidth = this.widthCheck.innerWidth;
@@ -39,11 +37,9 @@ export class ProductComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.isLoadingService.startLoading()
     const token = JSON.parse(localStorage.getItem('authToken') || '""')
     const res: any = await this.apiService.getProducts(token);
     this.productArray = res.message
-    this.isLoadingService.stopLoading()
   }
 
   toggleInputWidth() {

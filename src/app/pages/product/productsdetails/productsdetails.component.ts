@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
-import { IsLoadingService } from '../../../services/isLoadingService.service';
 
 @Component({
   selector: 'app-productsdetails',
@@ -35,10 +34,8 @@ export class ProductsdetailsComponent implements OnInit {
     private el: ElementRef,
     private router: ActivatedRoute,
     private apiService: ApiService,
-    private isLoadingService: IsLoadingService
   ) {}
   async ngOnInit(): Promise<void> {
-    this.isLoadingService.startLoading()
     this.productId = this.router.snapshot.paramMap.get('id') || '';
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     const res: any = await this.apiService.getProductById(
@@ -94,7 +91,6 @@ export class ProductsdetailsComponent implements OnInit {
       this.productImageUrl = URL.createObjectURL(imageBlob);
     }
     if (Array.isArray(this.productsDataById.author)) {
-      this.isLoadingService.startBlobLoading()
       this.userImageUrl = this.productsDataById.author.map(() => this.imgSrc4);
       await Promise.all(
         this.productsDataById.author.map(async (author: any, index: number) => {
@@ -103,9 +99,7 @@ export class ProductsdetailsComponent implements OnInit {
           this.userImageUrl[index] = URL.createObjectURL(blob);
         })
       ).catch(() => this.productsDataById.author.map(() => this.imgSrc4));
-      this.isLoadingService.stopBlobLoading()
     }
-    this.isLoadingService.stopLoading()
   }
   getAnimation() {
     const container = this.el.nativeElement.querySelector('#dynamic-content');
