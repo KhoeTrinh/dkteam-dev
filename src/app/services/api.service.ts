@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { RoleService } from './role.service';
 import { UserService } from './user.service';
-import { AboutmeService } from './aboutme.service';
 import { UserDataService } from './userData.service';
 
 @Injectable({
@@ -15,7 +14,6 @@ export class ApiService {
     private http: HttpClient,
     private roleService: RoleService,
     private userService: UserService,
-    private aboutmeService: AboutmeService,
     private userDataService: UserDataService
   ) {}
 
@@ -126,9 +124,29 @@ export class ApiService {
     );
   }
 
+  getAboutme(token: string, id: string) {
+    return lastValueFrom(
+      this.http.get(`${this.apiUrl}/aboutme/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
   createProduct(data: any, token: string) {
     return lastValueFrom(
       this.http.post(`${this.apiUrl}/products`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  }
+
+  updateAboutme(token: string, id: string, data: any) {
+    return lastValueFrom(
+      this.http.put(`${this.apiUrl}/aboutme/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -191,12 +209,12 @@ export class ApiService {
     });
     this.userService.setUser(true);
     this.userDataService.setData(res.message);
-    this.aboutmeService.setAboutme(res.message.aboutme);
     return { status: true, message: res.message };
   }
 
   tokenExpired() {
     this.roleService.setRole({ isDev: false, isAdmin: false });
     this.userService.setUser(false);
+    localStorage.removeItem('authToken');
   }
 }

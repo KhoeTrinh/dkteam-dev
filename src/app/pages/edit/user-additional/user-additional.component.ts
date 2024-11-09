@@ -25,20 +25,22 @@ export class UserAdditionalComponent implements OnInit {
   pickSide: string | null = null;
   aboutme: any = null;
   id: string = '';
-  role: any
+  role: any;
 
   constructor(
     private apiService: ApiService,
-    private roleService: RoleService,
+    private roleService: RoleService
   ) {}
 
   async ngOnInit(): Promise<void> {
     const res = await this.apiService.checkToken();
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
     this.role = this.roleService.getRole();
-    this.aboutme = res.message.aboutme;
     this.fileName = res.message.userImage;
     this.fileUrl = res.message.userImage;
     this.id = res.message.id;
+    const aboutmeRes: any = await this.apiService.getAboutme(token, this.id);
+    this.aboutme = aboutmeRes.message;
   }
 
   onFileSelected(event: any) {
@@ -77,8 +79,8 @@ export class UserAdditionalComponent implements OnInit {
     formData.append('type', 'user');
 
     const res: any = await this.apiService.uploadImage(formData);
-    localStorage.setItem('authToken', JSON.stringify(res.token))
-    this.apiService.checkToken()
+    localStorage.setItem('authToken', JSON.stringify(res.token));
+    this.apiService.checkToken();
     return 'Ok';
   }
 }
