@@ -20,18 +20,19 @@ export class ProductElementComponent implements OnInit {
   imgSrc4: string = 'assets/svg/file-pencil-alt-svgrepo-com.svg';
   imgSrc5: string = 'assets/svg/user-svgrepo-com.svg';
   imgSrc6: string = 'assets/svg/info-circle-svgrepo-com.svg';
-  commentOpen: boolean = true;
+  commentOpen: boolean = false;
   authors: any = '';
   comments: any = '';
   productImageUrl: string = '';
   userImageUrlProd: string[] = [];
   userData: any = {};
   userImageUrl: string = '';
-  userImageUrlComment: string [] = []
+  userImageUrlComment: string[] = [];
 
   @Input() productData: any = '';
   @Output() commentOpenChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
+  @Output() prefetch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private apiService: ApiService) {}
 
@@ -65,7 +66,9 @@ export class ProductElementComponent implements OnInit {
       ).catch(() => this.productData.author.map(() => this.imgSrc5));
     }
     if (Array.isArray(this.productData.comments)) {
-      this.userImageUrlComment = this.productData.comments.map(() => this.imgSrc5);
+      this.userImageUrlComment = this.productData.comments.map(
+        () => this.imgSrc5
+      );
       await Promise.all(
         this.productData.comments.map(async (author: any, index: number) => {
           const imagePath = author.author.userImage;
@@ -88,6 +91,8 @@ export class ProductElementComponent implements OnInit {
     };
     const token = JSON.parse(localStorage.getItem('authToken') || '""');
     await this.apiService.createComment(token, data);
+    this.prefetch.emit(true)
+    await this.ngOnInit();
     description.value = '';
   }
 }

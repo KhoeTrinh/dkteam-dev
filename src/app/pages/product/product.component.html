@@ -44,7 +44,7 @@
       </div>
     </div>
     @for(product of productArray; track product.id) {
-    <app-product-element [productData]="product" />
+    <app-product-element [productData]="product" (prefetch)="onPrefetch()" />
     }
   </div>
 </div>

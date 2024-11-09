@@ -24,7 +24,7 @@ export class ProductComponent implements OnInit {
   imgSrc6: string = 'assets/svg/search-svgrepo-com.svg';
   innerWidth: number = 0;
   isExpanded: boolean = false;
-  productArray: any = []
+  productArray: any = [];
   constructor(
     private widthCheck: WidthCheckService,
     private apiService: ApiService,
@@ -37,9 +37,7 @@ export class ProductComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const token = JSON.parse(localStorage.getItem('authToken') || '""')
-    const res: any = await this.apiService.getProducts(token);
-    this.productArray = res.message
+    this.fetch();
   }
 
   toggleInputWidth() {
@@ -47,6 +45,16 @@ export class ProductComponent implements OnInit {
   }
 
   Search(value: string) {
-    this.router.navigate([`products/${value}`])
+    this.router.navigate([`products/${value}`]);
+  }
+
+  onPrefetch() {
+    this.fetch();
+  }
+
+  async fetch() {
+    const token = JSON.parse(localStorage.getItem('authToken') || '""');
+    const res: any = await this.apiService.getProducts(token);
+    this.productArray = res.message;
   }
 }
