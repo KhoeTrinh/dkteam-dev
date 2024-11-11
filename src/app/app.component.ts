@@ -1,7 +1,12 @@
 import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from './components/ts/navbar.component';
 import { FooterComponent } from './components/ts/footer.component';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import {
   combineLatest,
   filter,
@@ -12,6 +17,7 @@ import {
 import { debounceTime, map } from 'rxjs/operators';
 import { ApiService } from './services/api.service';
 import { AsyncPipe } from '@angular/common';
+import { routeTransition } from './utils/animations/route.transition';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +25,7 @@ import { AsyncPipe } from '@angular/common';
   imports: [NavbarComponent, FooterComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  animations: [routeTransition],
 })
 export class AppComponent implements OnInit, OnDestroy {
   isSpecialRoute: boolean = false;
@@ -27,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private apiService: ApiService,
+    protected route: ActivatedRoute
   ) {
     this.router.events
       .pipe(
